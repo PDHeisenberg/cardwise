@@ -236,3 +236,4 @@ The `sg_cards.json` database includes **35+ cards** with accurate reward tiers:
 ## License
 
 MIT
+
