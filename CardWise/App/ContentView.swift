@@ -1,9 +1,7 @@
 // ContentView.swift
 // CardWise
 //
-// Root view that handles onboarding state and main tab navigation.
-// 4 tabs: Dashboard, Transactions, Cards, Reports.
-// (Wallet passes are managed via Apple Wallet, not an in-app tab.)
+// Root view — onboarding flow → single home screen. No tabs.
 
 import SwiftUI
 import SwiftData
@@ -14,43 +12,10 @@ struct ContentView: View {
 
     var body: some View {
         if hasCompletedOnboarding {
-            MainTabView()
+            HomeView()
         } else {
             OnboardingView(hasCompletedOnboarding: $hasCompletedOnboarding)
         }
-    }
-}
-
-struct MainTabView: View {
-    @State private var selectedTab = 0
-
-    var body: some View {
-        TabView(selection: $selectedTab) {
-            DashboardView()
-                .tabItem {
-                    Label("Dashboard", systemImage: "chart.bar.fill")
-                }
-                .tag(0)
-
-            TransactionListView()
-                .tabItem {
-                    Label("Transactions", systemImage: "list.bullet.rectangle.fill")
-                }
-                .tag(1)
-
-            CardsView()
-                .tabItem {
-                    Label("Cards", systemImage: "creditcard.fill")
-                }
-                .tag(2)
-
-            ReportView()
-                .tabItem {
-                    Label("Reports", systemImage: "chart.pie.fill")
-                }
-                .tag(3)
-        }
-        .tint(.blue)
     }
 }
 

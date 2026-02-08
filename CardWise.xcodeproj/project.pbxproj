@@ -21,14 +21,7 @@
 		A10000012 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000012; };
 		A10000013 /* TransactionIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000013; };
 		A10000014 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000014; };
-		A10000015 /* ShortcutSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000015; };
-		A10000016 /* WalletPassSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000016; };
-		A10000017 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000017; };
-		A10000018 /* TransactionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000018; };
-		A10000019 /* TransactionRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000019; };
-		A10000020 /* CardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000020; };
-		A10000021 /* CardDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000021; };
-		A10000022 /* ReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000022; };
+		A10000025 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000025; };
 		A10000023 /* sg_cards.json in Resources */ = {isa = PBXBuildFile; fileRef = B10000023; };
 		A10000024 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B10000024; };
 		A10000030 /* Passes in Resources */ = {isa = PBXBuildFile; fileRef = B10000030; };
@@ -50,17 +43,10 @@
 		B10000012 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		B10000013 /* TransactionIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionIntent.swift; sourceTree = "<group>"; };
 		B10000014 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
-		B10000015 /* ShortcutSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutSetupView.swift; sourceTree = "<group>"; };
-		B10000016 /* WalletPassSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletPassSetupView.swift; sourceTree = "<group>"; };
-		B10000017 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
-		B10000018 /* TransactionListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionListView.swift; sourceTree = "<group>"; };
-		B10000019 /* TransactionRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionRowView.swift; sourceTree = "<group>"; };
-		B10000020 /* CardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsView.swift; sourceTree = "<group>"; };
-		B10000021 /* CardDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetailView.swift; sourceTree = "<group>"; };
-		B10000022 /* ReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportView.swift; sourceTree = "<group>"; };
+		B10000025 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		B10000023 /* sg_cards.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = sg_cards.json; sourceTree = "<group>"; };
 		B10000024 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		B10000025 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B10000025a /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B10000030 /* Passes */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Passes; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -101,7 +87,7 @@
 				E10000010 /* Data */,
 				E10000011 /* Intents */,
 				E10000012 /* Resources */,
-				B10000025 /* Info.plist */,
+				B10000025a /* Info.plist */,
 			);
 			path = CardWise;
 			sourceTree = "<group>";
@@ -143,9 +129,7 @@
 			isa = PBXGroup;
 			children = (
 				E10000007 /* Onboarding */,
-				E10000008 /* Dashboard */,
-				E10000009 /* Cards */,
-				E10000013 /* Reports */,
+				E10000014 /* Home */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -154,29 +138,16 @@
 			isa = PBXGroup;
 			children = (
 				B10000014 /* OnboardingView.swift */,
-				B10000015 /* ShortcutSetupView.swift */,
-				B10000016 /* WalletPassSetupView.swift */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
 		};
-		E10000008 /* Dashboard */ = {
+		E10000014 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				B10000017 /* DashboardView.swift */,
-				B10000018 /* TransactionListView.swift */,
-				B10000019 /* TransactionRowView.swift */,
+				B10000025 /* HomeView.swift */,
 			);
-			path = Dashboard;
-			sourceTree = "<group>";
-		};
-		E10000009 /* Cards */ = {
-			isa = PBXGroup;
-			children = (
-				B10000020 /* CardsView.swift */,
-				B10000021 /* CardDetailView.swift */,
-			);
-			path = Cards;
+			path = Home;
 			sourceTree = "<group>";
 		};
 		E10000010 /* Data */ = {
@@ -202,14 +173,6 @@
 				B10000030 /* Passes */,
 			);
 			path = Resources;
-			sourceTree = "<group>";
-		};
-		E10000013 /* Reports */ = {
-			isa = PBXGroup;
-			children = (
-				B10000022 /* ReportView.swift */,
-			);
-			path = Reports;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -297,14 +260,7 @@
 				A10000012 /* NotificationService.swift in Sources */,
 				A10000013 /* TransactionIntent.swift in Sources */,
 				A10000014 /* OnboardingView.swift in Sources */,
-				A10000015 /* ShortcutSetupView.swift in Sources */,
-				A10000016 /* WalletPassSetupView.swift in Sources */,
-				A10000017 /* DashboardView.swift in Sources */,
-				A10000018 /* TransactionListView.swift in Sources */,
-				A10000019 /* TransactionRowView.swift in Sources */,
-				A10000020 /* CardsView.swift in Sources */,
-				A10000021 /* CardDetailView.swift in Sources */,
-				A10000022 /* ReportView.swift in Sources */,
+				A10000025 /* HomeView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
