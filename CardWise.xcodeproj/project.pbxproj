@@ -28,7 +28,7 @@
 		A10000019 /* TransactionRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000019; };
 		A10000020 /* CardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000020; };
 		A10000021 /* CardDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000021; };
-		A10000025 /* WalletCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000025; };
+		A10000026 /* WalletCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000026; };
 		A10000022 /* ReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000022; };
 		A10000023 /* sg_cards.json in Resources */ = {isa = PBXBuildFile; fileRef = B10000023; };
 		A10000024 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B10000024; };
@@ -57,7 +57,7 @@
 		B10000019 /* TransactionRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionRowView.swift; sourceTree = "<group>"; };
 		B10000020 /* CardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsView.swift; sourceTree = "<group>"; };
 		B10000021 /* CardDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetailView.swift; sourceTree = "<group>"; };
-		B10000025 /* WalletCardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletCardsView.swift; sourceTree = "<group>"; };
+		B10000026 /* WalletCardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletCardsView.swift; sourceTree = "<group>"; };
 		B10000022 /* ReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportView.swift; sourceTree = "<group>"; };
 		B10000023 /* sg_cards.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = sg_cards.json; sourceTree = "<group>"; };
 		B10000024 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -175,7 +175,7 @@
 			children = (
 				B10000020 /* CardsView.swift */,
 				B10000021 /* CardDetailView.swift */,
-				B10000025 /* WalletCardsView.swift */,
+				B10000026 /* WalletCardsView.swift */,
 			);
 			path = Cards;
 			sourceTree = "<group>";
@@ -303,7 +303,7 @@
 				A10000019 /* TransactionRowView.swift in Sources */,
 				A10000020 /* CardsView.swift in Sources */,
 				A10000021 /* CardDetailView.swift in Sources */,
-				A10000025 /* WalletCardsView.swift in Sources */,
+				A10000026 /* WalletCardsView.swift in Sources */,
 				A10000022 /* ReportView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
