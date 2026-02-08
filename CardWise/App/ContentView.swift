@@ -30,23 +30,29 @@ struct MainTabView: View {
                 }
                 .tag(0)
 
+            WalletCardsView()
+                .tabItem {
+                    Label("Wallet", systemImage: "wallet.pass.fill")
+                }
+                .tag(1)
+
             TransactionListView()
                 .tabItem {
                     Label("Transactions", systemImage: "list.bullet.rectangle.fill")
                 }
-                .tag(1)
+                .tag(2)
 
             CardsView()
                 .tabItem {
                     Label("Cards", systemImage: "creditcard.fill")
                 }
-                .tag(2)
+                .tag(3)
 
             ReportView()
                 .tabItem {
                     Label("Reports", systemImage: "chart.pie.fill")
                 }
-                .tag(3)
+                .tag(4)
         }
         .tint(.blue)
     }

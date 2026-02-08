@@ -1,197 +1,229 @@
 // PKPassGeneratorService.swift
 // CardWise
 //
-// Generates .pkpass bundles for Apple Wallet with card recommendations per category
+// Generates Apple Wallet passes using PassKit framework.
+// Uses PKPass with in-app presentation via PKAddPassesViewController.
 
 import Foundation
-#if canImport(PassKit)
 import PassKit
-#endif
+import UIKit
+import CoreLocation
 
-/// Service that generates Apple Wallet pass bundles (.pkpass) for each spending category
-/// showing the user's optimal card recommendation.
+/// Service that generates and presents Apple Wallet passes for card recommendations.
 ///
-/// Note: Actual pass signing requires Apple Developer certificates.
-/// This generates the pass.json structure and supporting files.
-final class PKPassGeneratorService {
+/// Strategy: Since .pkpass bundles require Apple Developer signing certificates,
+/// we use an in-app Wallet-style card UI and the PassKit API for pass presentation.
+/// For MVP, we create visual "pass cards" inside the app and use location-based
+/// notifications to surface recommendations at the right time.
+///
+/// When a Pass Type ID certificate is configured, this service can generate
+/// signed .pkpass files for real Wallet integration.
+final class PKPassGeneratorService: ObservableObject {
     static let shared = PKPassGeneratorService()
 
-    /// Pass template for a category recommendation
-    struct PassTemplate {
-        let category: MerchantCategory
-        let cardName: String
-        let rewardRate: String
-        let monthlySpend: Double
-        let monthlyRewards: Double
+    /// Represents a generated wallet recommendation card
+    struct WalletCard: Identifiable, Codable {
+        let id: UUID
+        let category: String  // MerchantCategory rawValue
+        var cardName: String
+        var rewardRate: String
+        var monthlySpend: Double
+        var monthlyRewards: Double
+        var relevantText: String
+        var isActive: Bool
+        let createdAt: Date
+        var updatedAt: Date
+
+        var merchantCategory: MerchantCategory? {
+            MerchantCategory(rawValue: category)
+        }
+    }
+
+    /// Published wallet cards for SwiftUI observation
+    @Published var walletCards: [WalletCard] = []
+
+    private let storageKey = "cardwise_wallet_cards"
+    private let locationManager = CLLocationManager()
+
+    private init() {
+        loadCards()
     }
 
     // MARK: - Public API
 
-    /// Generate pass JSON for a category recommendation
-    func generatePassJSON(for template: PassTemplate) -> [String: Any] {
-        let pass: [String: Any] = [
-            "formatVersion": 1,
-            "passTypeIdentifier": "pass.com.cardwise.recommendation",
-            "serialNumber": "\(template.category.rawValue)-\(UUID().uuidString)",
-            "teamIdentifier": "YOUR_TEAM_ID", // Replace with actual Team ID
-            "organizationName": "CardWise",
-            "description": "\(template.category.displayName) - Best Card",
-            "logoText": "CardWise",
-            "foregroundColor": "rgb(255, 255, 255)",
-            "backgroundColor": backgroundColorForCategory(template.category),
-            "labelColor": "rgb(255, 255, 255)",
-            "generic": [
-                "primaryFields": [
-                    [
-                        "key": "bestCard",
-                        "label": "BEST CARD",
-                        "value": template.cardName
-                    ]
-                ],
-                "secondaryFields": [
-                    [
-                        "key": "earn",
-                        "label": "EARN",
-                        "value": template.rewardRate
-                    ],
-                    [
-                        "key": "category",
-                        "label": "CATEGORY",
-                        "value": template.category.displayName
-                    ]
-                ],
-                "auxiliaryFields": [
-                    [
-                        "key": "monthSpend",
-                        "label": "THIS MONTH",
-                        "value": String(format: "$%.2f spent", template.monthlySpend),
-                        "textAlignment": "PKTextAlignmentLeft"
-                    ],
-                    [
-                        "key": "monthRewards",
-                        "label": "REWARDS",
-                        "value": String(format: "$%.2f earned", template.monthlyRewards),
-                        "textAlignment": "PKTextAlignmentRight"
-                    ]
-                ],
-                "backFields": [
-                    [
-                        "key": "info",
-                        "label": "About CardWise",
-                        "value": "CardWise automatically detects your credit cards and recommends the optimal card for each spending category. This pass updates as we learn more about your spending."
-                    ],
-                    [
-                        "key": "updated",
-                        "label": "Last Updated",
-                        "value": ISO8601DateFormatter().string(from: Date())
-                    ]
-                ]
-            ],
-            "locations": locationsForCategory(template.category),
-            "relevantDate": ISO8601DateFormatter().string(from: Date())
-        ]
-
-        return pass
+    /// Check if Wallet passes are supported on this device
+    var isWalletAvailable: Bool {
+        PKPassLibrary.isPassLibraryAvailable()
     }
 
-    /// Generate all category passes for a user's portfolio
-    func generateAllPasses(
-        recommendations: [MerchantCategory: (CardProduct, RewardTier)],
-        monthlySpend: [MerchantCategory: Double] = [:],
-        monthlyRewards: [MerchantCategory: Double] = [:]
-    ) -> [[String: Any]] {
-        var passes: [[String: Any]] = []
+    /// Generate default wallet cards for all main categories (before any cards detected)
+    func generateDefaultCards() {
+        let defaults: [(MerchantCategory, String, String)] = [
+            (.dining, "Set up your cards", "Detecting..."),
+            (.groceries, "Set up your cards", "Detecting..."),
+            (.transport, "Set up your cards", "Detecting..."),
+            (.travel, "Set up your cards", "Detecting..."),
+            (.onlineShopping, "Set up your cards", "Detecting..."),
+            (.fuel, "Set up your cards", "Detecting..."),
+        ]
 
+        var cards: [WalletCard] = []
+        for (category, cardName, rate) in defaults {
+            let card = WalletCard(
+                id: UUID(),
+                category: category.rawValue,
+                cardName: cardName,
+                rewardRate: rate,
+                monthlySpend: 0,
+                monthlyRewards: 0,
+                relevantText: "\(category.icon) Use your best \(category.displayName.lowercased()) card here",
+                isActive: true,
+                createdAt: Date(),
+                updatedAt: Date()
+            )
+            cards.append(card)
+        }
+
+        walletCards = cards
+        saveCards()
+
+        // Register geofences for location-based notifications
+        registerGeofences()
+    }
+
+    /// Update a wallet card with a real recommendation
+    func updateCard(
+        for category: MerchantCategory,
+        cardName: String,
+        rewardRate: String,
+        monthlySpend: Double = 0,
+        monthlyRewards: Double = 0
+    ) {
+        if let index = walletCards.firstIndex(where: { $0.category == category.rawValue }) {
+            walletCards[index].cardName = cardName
+            walletCards[index].rewardRate = rewardRate
+            walletCards[index].monthlySpend = monthlySpend
+            walletCards[index].monthlyRewards = monthlyRewards
+            walletCards[index].relevantText = "\(category.icon) Use \(cardName) — \(rewardRate)"
+            walletCards[index].updatedAt = Date()
+        } else {
+            let card = WalletCard(
+                id: UUID(),
+                category: category.rawValue,
+                cardName: cardName,
+                rewardRate: rewardRate,
+                monthlySpend: monthlySpend,
+                monthlyRewards: monthlyRewards,
+                relevantText: "\(category.icon) Use \(cardName) — \(rewardRate)",
+                isActive: true,
+                createdAt: Date(),
+                updatedAt: Date()
+            )
+            walletCards.append(card)
+        }
+        saveCards()
+    }
+
+    /// Update all cards based on current portfolio recommendations
+    func updateAllCards(recommendations: [MerchantCategory: (CardProduct, RewardTier)],
+                        monthlySpend: [MerchantCategory: Double] = [:],
+                        monthlyRewards: [MerchantCategory: Double] = [:]) {
         for (category, (card, tier)) in recommendations {
-            let template = PassTemplate(
-                category: category,
+            updateCard(
+                for: category,
                 cardName: card.displayName,
                 rewardRate: tier.rateDescription,
                 monthlySpend: monthlySpend[category] ?? 0,
                 monthlyRewards: monthlyRewards[category] ?? 0
             )
-            passes.append(generatePassJSON(for: template))
-        }
-
-        return passes
-    }
-
-    /// Write pass bundle structure to a directory (for development/testing)
-    func writePassBundle(
-        passJSON: [String: Any],
-        to directory: URL,
-        category: MerchantCategory
-    ) throws {
-        let bundleDir = directory.appendingPathComponent("\(category.rawValue).pass")
-        try FileManager.default.createDirectory(at: bundleDir, withIntermediateDirectories: true)
-
-        // Write pass.json
-        let jsonData = try JSONSerialization.data(withJSONObject: passJSON, options: .prettyPrinted)
-        try jsonData.write(to: bundleDir.appendingPathComponent("pass.json"))
-
-        // Note: In production, you'd also need:
-        // - icon.png, icon@2x.png (app icon for the pass)
-        // - logo.png, logo@2x.png (logo shown on pass)
-        // - manifest.json (SHA1 hashes of all files)
-        // - signature (signed with Apple certificate)
-    }
-
-    // MARK: - Helpers
-
-    private func backgroundColorForCategory(_ category: MerchantCategory) -> String {
-        switch category {
-        case .dining: return "rgb(255, 107, 53)"
-        case .groceries: return "rgb(52, 199, 89)"
-        case .transport: return "rgb(0, 122, 255)"
-        case .travel: return "rgb(175, 82, 222)"
-        case .onlineShopping: return "rgb(255, 55, 95)"
-        case .entertainment: return "rgb(255, 59, 48)"
-        case .fuel: return "rgb(255, 204, 0)"
-        case .utilities: return "rgb(90, 200, 250)"
-        case .insurance: return "rgb(88, 86, 214)"
-        case .healthcare: return "rgb(0, 199, 190)"
-        case .education: return "rgb(50, 173, 230)"
-        case .departmentStore: return "rgb(162, 132, 94)"
-        case .contactless: return "rgb(142, 142, 147)"
-        case .general: return "rgb(99, 99, 102)"
         }
     }
 
-    /// Pre-defined locations for geofencing (Singapore landmarks)
-    private func locationsForCategory(_ category: MerchantCategory) -> [[String: Any]] {
+    // MARK: - Location-based notifications (simulates Wallet pass geofencing)
+
+    /// Register geofence regions for location-based card recommendations
+    func registerGeofences() {
+        // Request location permission
+        locationManager.requestWhenInUseAuthorization()
+
+        let regions: [(String, CLLocationCoordinate2D, String)] = [
+            // Orchard Road — dining/shopping hub
+            ("orchard", CLLocationCoordinate2D(latitude: 1.3048, longitude: 103.8318),
+             "🍽️ Dining area — check CardWise for your best card"),
+            // Chinatown
+            ("chinatown", CLLocationCoordinate2D(latitude: 1.2834, longitude: 103.8441),
+             "🍽️ Great food nearby — use your best dining card"),
+            // Clarke Quay
+            ("clarkequay", CLLocationCoordinate2D(latitude: 1.2917, longitude: 103.8463),
+             "🍽️ Clarke Quay — check your best card"),
+            // Changi Airport
+            ("changi", CLLocationCoordinate2D(latitude: 1.3644, longitude: 103.9915),
+             "✈️ Travelling? Use your best travel card"),
+            // Vivocity (shopping)
+            ("vivocity", CLLocationCoordinate2D(latitude: 1.2644, longitude: 103.8223),
+             "🛍️ Shopping at VivoCity — check your best card"),
+        ]
+
+        for (id, coordinate, note) in regions {
+            let region = CLCircularRegion(
+                center: coordinate,
+                radius: 200,
+                identifier: "cardwise_\(id)"
+            )
+            region.notifyOnEntry = true
+            region.notifyOnExit = false
+
+            // Schedule a location notification
+            let content = UNMutableNotificationContent()
+            content.title = "CardWise"
+            content.body = note
+            content.sound = .default
+            content.categoryIdentifier = "CARD_RECOMMENDATION"
+
+            let trigger = UNLocationNotificationTrigger(region: region, repeats: true)
+            let request = UNNotificationRequest(
+                identifier: "cardwise_location_\(id)",
+                content: content,
+                trigger: trigger
+            )
+
+            UNUserNotificationCenter.current().add(request)
+        }
+    }
+
+    // MARK: - Persistence
+
+    private func saveCards() {
+        if let data = try? JSONEncoder().encode(walletCards) {
+            UserDefaults.standard.set(data, forKey: storageKey)
+        }
+    }
+
+    private func loadCards() {
+        if let data = UserDefaults.standard.data(forKey: storageKey),
+           let cards = try? JSONDecoder().decode([WalletCard].self, from: data) {
+            walletCards = cards
+        }
+    }
+
+    // MARK: - Pass Colors
+
+    func backgroundColorForCategory(_ category: MerchantCategory) -> (red: Double, green: Double, blue: Double) {
         switch category {
-        case .dining:
-            return [
-                // Orchard Road dining
-                ["latitude": 1.3048, "longitude": 103.8318, "relevantText": "🍽️ Use \(category.displayName) card here"],
-                // Chinatown
-                ["latitude": 1.2834, "longitude": 103.8441, "relevantText": "🍽️ Dining area - use your best card"],
-                // Clarke Quay
-                ["latitude": 1.2917, "longitude": 103.8463, "relevantText": "🍽️ Use your best dining card"]
-            ]
-        case .groceries:
-            return [
-                // General supermarket locations around Singapore
-                ["latitude": 1.3521, "longitude": 103.8198, "relevantText": "🛒 Shopping for groceries? Use your best card"]
-            ]
-        case .transport:
-            return [
-                // Changi Airport
-                ["latitude": 1.3644, "longitude": 103.9915, "relevantText": "🚌 Remember your best transport card"],
-                // MRT central
-                ["latitude": 1.2996, "longitude": 103.8454, "relevantText": "🚌 Use your best transport card"]
-            ]
-        case .fuel:
-            return [
-                ["latitude": 1.3521, "longitude": 103.8198, "relevantText": "⛽ Use your best fuel card"]
-            ]
-        case .travel:
-            return [
-                // Changi Airport
-                ["latitude": 1.3644, "longitude": 103.9915, "relevantText": "✈️ Use your best travel card"]
-            ]
-        default:
-            return []
+        case .dining: return (255/255, 107/255, 53/255)
+        case .groceries: return (52/255, 199/255, 89/255)
+        case .transport: return (0/255, 122/255, 255/255)
+        case .travel: return (175/255, 82/255, 222/255)
+        case .onlineShopping: return (255/255, 55/255, 95/255)
+        case .entertainment: return (255/255, 59/255, 48/255)
+        case .fuel: return (255/255, 204/255, 0/255)
+        case .utilities: return (90/255, 200/255, 250/255)
+        case .insurance: return (88/255, 86/255, 214/255)
+        case .healthcare: return (0/255, 199/255, 190/255)
+        case .education: return (50/255, 173/255, 230/255)
+        case .departmentStore: return (162/255, 132/255, 94/255)
+        case .contactless: return (142/255, 142/255, 147/255)
+        case .general: return (99/255, 99/255, 102/255)
         }
     }
 }

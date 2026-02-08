@@ -1,14 +1,17 @@
 // WalletPassSetupView.swift
 // CardWise
 //
-// Screen 3 of onboarding: Install initial Wallet passes
+// Screen 3 of onboarding: Enable location notifications + generate in-app wallet cards
 
 import SwiftUI
+import UserNotifications
 
 struct WalletPassSetupView: View {
     let onComplete: () -> Void
+    @StateObject private var passService = PKPassGeneratorService.shared
     @State private var installedCategories: Set<MerchantCategory> = []
     @State private var isInstalling = false
+    @State private var permissionGranted = false
 
     private let featuredCategories: [MerchantCategory] = [
         .dining, .groceries, .transport, .travel, .onlineShopping, .fuel
@@ -24,18 +27,18 @@ struct WalletPassSetupView: View {
                 .symbolRenderingMode(.hierarchical)
 
             VStack(spacing: 16) {
-                Text("Add to your Wallet")
+                Text("Enable Smart Cards")
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .multilineTextAlignment(.center)
 
-                Text("Install smart passes that show your best card for each category — right inside Apple Wallet.")
+                Text("We'll create recommendation cards for each spending category and notify you at the right place and time.")
                     .font(.title3)
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal)
 
-                Text("These update with personalized recommendations as we learn your cards.")
+                Text("Cards update automatically as we learn your spending habits.")
                     .font(.callout)
                     .foregroundStyle(.tertiary)
                     .multilineTextAlignment(.center)
@@ -64,7 +67,7 @@ struct WalletPassSetupView: View {
                             ProgressView()
                                 .tint(.white)
                         }
-                        Text(isInstalling ? "Installing..." : "Add to Wallet")
+                        Text(isInstalling ? "Setting up..." : "Enable Smart Cards")
                             .font(.headline)
                     }
                     .frame(maxWidth: .infinity)
@@ -89,18 +92,33 @@ struct WalletPassSetupView: View {
     private func installAllPasses() {
         isInstalling = true
 
-        // Simulate pass installation (actual implementation requires Apple Developer cert)
         Task {
+            // Request notification permission
+            let center = UNUserNotificationCenter.current()
+            let granted = try? await center.requestAuthorization(options: [.alert, .badge, .sound])
+            permissionGranted = granted ?? false
+
+            // Generate default wallet cards
+            await MainActor.run {
+                passService.generateDefaultCards()
+            }
+
+            // Animate the card installation
             for category in featuredCategories {
-                try? await Task.sleep(for: .milliseconds(200))
-                withAnimation(.spring(response: 0.3)) {
-                    installedCategories.insert(category)
+                try? await Task.sleep(for: .milliseconds(250))
+                await MainActor.run {
+                    withAnimation(.spring(response: 0.3)) {
+                        installedCategories.insert(category)
+                    }
                 }
             }
-            isInstalling = false
 
             try? await Task.sleep(for: .milliseconds(500))
-            onComplete()
+
+            await MainActor.run {
+                isInstalling = false
+                onComplete()
+            }
         }
     }
 }

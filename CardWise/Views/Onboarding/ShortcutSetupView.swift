@@ -51,21 +51,28 @@ struct ShortcutSetupView: View {
 
             VStack(spacing: 12) {
                 Button(action: {
-                    showingInstructions = true
+                    // Open Shortcuts app directly to the Automation tab
+                    if let url = URL(string: "shortcuts://create-automation") {
+                        UIApplication.shared.open(url)
+                    } else if let url = URL(string: "shortcuts://") {
+                        UIApplication.shared.open(url)
+                    }
                 }) {
-                    Text("View Detailed Setup Guide")
-                        .font(.subheadline)
-                        .foregroundStyle(.blue)
-                }
-
-                Button(action: onContinue) {
-                    Text("Set Up Shortcut")
+                    Text("Open Shortcuts App")
                         .font(.headline)
                         .frame(maxWidth: .infinity)
                         .padding()
                         .background(Color.orange)
                         .foregroundColor(.white)
                         .clipShape(RoundedRectangle(cornerRadius: 16))
+                }
+
+                Button(action: {
+                    showingInstructions = true
+                }) {
+                    Text("View Step-by-Step Guide")
+                        .font(.subheadline)
+                        .foregroundStyle(.blue)
                 }
 
                 Button(action: onContinue) {
