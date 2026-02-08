@@ -62,7 +62,7 @@ struct MerchantNameQuery: EntityStringQuery {
 struct LogTransactionIntent: AppIntent {
     static var title: LocalizedStringResource = "Log Transaction"
     static var description = IntentDescription(
-        "Logs an Apple Pay transaction for card optimization analysis.",
+        "Logs a payment transaction for card optimization analysis.",
         categoryName: "Transactions"
     )
 
@@ -72,7 +72,7 @@ struct LogTransactionIntent: AppIntent {
     @Parameter(title: "Amount", description: "Transaction amount in dollars")
     var amount: Double
 
-    @Parameter(title: "Card Name", description: "Name of the card/pass used (from Apple Pay)")
+    @Parameter(title: "Card Name", description: "Name of the card/pass used for payment")
     var cardName: String
 
     @Parameter(title: "Currency", description: "Currency code (default: SGD)", default: "SGD")
@@ -142,7 +142,7 @@ struct BestCardForMerchantIntent: AppIntent {
         let productIds = cards.compactMap(\.matchedProductId)
 
         guard !productIds.isEmpty else {
-            return .result(value: "No cards detected yet. Use Apple Pay a few times and I'll learn your cards!")
+            return .result(value: "No cards detected yet. Make a few payments and I'll learn your cards!")
         }
 
         let categoryService = MerchantCategoryService.shared
