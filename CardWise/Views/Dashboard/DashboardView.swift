@@ -5,11 +5,13 @@
 
 import SwiftUI
 import SwiftData
+import PassKit
 
 struct DashboardView: View {
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \Transaction.timestamp, order: .reverse) private var transactions: [Transaction]
     @Query(filter: #Predicate<Card> { $0.isActive == true }) private var cards: [Card]
+    @State private var showAddPasses = false
 
     private var recentTransactions: [Transaction] {
         Array(transactions.prefix(5))
@@ -59,6 +61,154 @@ struct DashboardView: View {
             }
             .navigationTitle("CardWise")
             .background(Color(.systemGroupedBackground))
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        showAddPasses = true
+                    } label: {
+                        Image(systemName: "wallet.pass.fill")
+                    }
+                }
+            }
+            .sheet(isPresented: $showAddPasses) {
+                AddPassesSheet()
+            }
+        }
+    }
+
+    // MARK: - Add Passes Sheet
+
+    struct AddPassesSheet: View {
+        @Environment(\.dismiss) private var dismiss
+        @State private var passes: [PKPass] = []
+        @State private var showingPassController = false
+        @State private var error: String?
+        @State private var addedCount = 0
+
+        var body: some View {
+            NavigationStack {
+                VStack(spacing: 24) {
+                    Spacer()
+
+                    Image(systemName: "wallet.pass.fill")
+                        .font(.system(size: 60))
+                        .foregroundStyle(.green)
+
+                    Text("Add to Apple Wallet")
+                        .font(.title)
+                        .fontWeight(.bold)
+
+                    Text("Install CardWise recommendation passes into your Apple Wallet. They'll appear when you double-tap to pay.")
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, 32)
+
+                    if let error {
+                        Text(error)
+                            .font(.caption)
+                            .foregroundStyle(.red)
+                            .padding(.horizontal)
+                    }
+
+                    if addedCount > 0 {
+                        Label("\(addedCount) passes added to Wallet!", systemImage: "checkmark.circle.fill")
+                            .font(.headline)
+                            .foregroundStyle(.green)
+                    }
+
+                    Spacer()
+
+                    if !passes.isEmpty {
+                        Button {
+                            showingPassController = true
+                        } label: {
+                            HStack {
+                                Image(systemName: "plus")
+                                Text("Add \(passes.count) Passes to Wallet")
+                            }
+                            .font(.headline)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(.black)
+                            .foregroundColor(.white)
+                            .clipShape(RoundedRectangle(cornerRadius: 16))
+                        }
+                        .padding(.horizontal, 32)
+                    }
+
+                    Button("Done") { dismiss() }
+                        .padding(.bottom, 32)
+                }
+                .navigationTitle("Wallet Passes")
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button("Done") { dismiss() }
+                    }
+                }
+                .onAppear { loadPasses() }
+                .sheet(isPresented: $showingPassController) {
+                    if !passes.isEmpty {
+                        AddPassesViewControllerWrapper(passes: passes, onFinish: {
+                            addedCount = passes.count
+                            showingPassController = false
+                        })
+                    }
+                }
+            }
+        }
+
+        private func loadPasses() {
+            let categories = ["dining", "groceries", "transport", "travel", "onlineShopping", "fuel"]
+            var loaded: [PKPass] = []
+
+            for cat in categories {
+                // Try Passes/ subdirectory first, then root bundle
+                if let url = Bundle.main.url(forResource: cat, withExtension: "pkpass", subdirectory: "Passes")
+                    ?? Bundle.main.url(forResource: cat, withExtension: "pkpass") {
+                    do {
+                        let data = try Data(contentsOf: url)
+                        let pass = try PKPass(data: data)
+                        loaded.append(pass)
+                    } catch {
+                        print("Failed to load pass \(cat): \(error)")
+                    }
+                }
+            }
+
+            if loaded.isEmpty {
+                error = "No passes found in app bundle. Run scripts/generate_passes.sh first."
+            }
+            passes = loaded
+        }
+    }
+
+    // MARK: - UIKit Bridge for PKAddPassesViewController
+
+    struct AddPassesViewControllerWrapper: UIViewControllerRepresentable {
+        let passes: [PKPass]
+        let onFinish: () -> Void
+
+        func makeUIViewController(context: Context) -> PKAddPassesViewController {
+            let controller = PKAddPassesViewController(passes: passes)!
+            controller.delegate = context.coordinator
+            return controller
+        }
+
+        func updateUIViewController(_ uiViewController: PKAddPassesViewController, context: Context) {}
+
+        func makeCoordinator() -> Coordinator {
+            Coordinator(onFinish: onFinish)
+        }
+
+        class Coordinator: NSObject, PKAddPassesViewControllerDelegate {
+            let onFinish: () -> Void
+            init(onFinish: @escaping () -> Void) { self.onFinish = onFinish }
+
+            func addPassesViewControllerDidFinish(_ controller: PKAddPassesViewController) {
+                onFinish()
+            }
         }
     }
 
