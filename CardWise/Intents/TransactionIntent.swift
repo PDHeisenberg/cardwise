@@ -7,8 +7,58 @@
 import AppIntents
 import SwiftData
 
+// MARK: - Merchant Name Entity for AppIntent parameter support
+
+/// A simple transient entity representing a merchant name string.
+/// Required because AppIntent @Parameter in AppShortcut phrases
+/// only supports AppEntity/AppEnum types, not raw String.
+struct MerchantNameEntity: AppEntity {
+    static var typeDisplayRepresentation = TypeDisplayRepresentation(name: "Merchant")
+    static var defaultQuery = MerchantNameQuery()
+
+    var id: String
+    var name: String
+
+    var displayRepresentation: DisplayRepresentation {
+        DisplayRepresentation(title: "\(name)")
+    }
+
+    init(id: String, name: String) {
+        self.id = id
+        self.name = name
+    }
+
+    init(name: String) {
+        self.id = name
+        self.name = name
+    }
+}
+
+struct MerchantNameQuery: EntityStringQuery {
+    func entities(for identifiers: [String]) async throws -> [MerchantNameEntity] {
+        identifiers.map { MerchantNameEntity(id: $0, name: $0) }
+    }
+
+    func entities(matching string: String) async throws -> IntentItemCollection<MerchantNameEntity> {
+        // Return the typed string as a merchant entity
+        let entity = MerchantNameEntity(name: string)
+        return IntentItemCollection(items: [entity])
+    }
+
+    func suggestedEntities() async throws -> IntentItemCollection<MerchantNameEntity> {
+        // Could return recent merchants here in the future
+        IntentItemCollection(items: [])
+    }
+}
+
+// MARK: - Log Transaction Intent
+
 /// App Intent that receives transaction data from the iOS Shortcuts Transaction Trigger.
 /// This is the primary integration point — the Shortcut fires after each Apple Pay transaction.
+///
+/// NOTE: This intent is designed to be called from a Shortcuts Automation
+/// (Transaction Trigger), not via Siri phrases. The parameters are plain
+/// String/Double which work fine when wired up manually in Shortcuts.
 struct LogTransactionIntent: AppIntent {
     static var title: LocalizedStringResource = "Log Transaction"
     static var description = IntentDescription(
@@ -59,7 +109,10 @@ struct LogTransactionIntent: AppIntent {
     }
 }
 
-/// Shortcut for querying the best card for a merchant
+// MARK: - Best Card Intent (Siri-enabled)
+
+/// Shortcut for querying the best card for a merchant.
+/// Uses MerchantNameEntity so it can be used in AppShortcut phrases with Siri.
 struct BestCardForMerchantIntent: AppIntent {
     static var title: LocalizedStringResource = "Best Card for Merchant"
     static var description = IntentDescription(
@@ -68,14 +121,16 @@ struct BestCardForMerchantIntent: AppIntent {
     )
 
     @Parameter(title: "Merchant Name", description: "Name of the merchant you're about to pay at")
-    var merchantName: String
+    var merchant: MerchantNameEntity
 
     static var parameterSummary: some ParameterSummary {
-        Summary("Best card for \(\.$merchantName)")
+        Summary("Best card for \(\.$merchant)")
     }
 
     @MainActor
     func perform() async throws -> some IntentResult & ReturnsValue<String> {
+        let merchantName = merchant.name
+
         let container = try ModelContainer(for: Transaction.self, Card.self)
         let context = container.mainContext
 
@@ -109,26 +164,19 @@ struct BestCardForMerchantIntent: AppIntent {
     }
 }
 
-/// Provider for the Shortcuts app to discover these intents
+// MARK: - App Shortcuts Provider
+
+/// Provider for the Shortcuts app to discover these intents.
+/// Only BestCardForMerchantIntent is exposed via Siri phrases (uses AppEntity param).
+/// LogTransactionIntent is used via manual Shortcuts Automation setup (Transaction Trigger).
 struct CardWiseShortcuts: AppShortcutsProvider {
     static var appShortcuts: [AppShortcut] {
         AppShortcut(
-            intent: LogTransactionIntent(),
-            phrases: [
-                "Log a transaction in \(.applicationName)",
-                "Record payment in \(.applicationName)",
-                "\(.applicationName) log purchase"
-            ],
-            shortTitle: "Log Transaction",
-            systemImageName: "creditcard.fill"
-        )
-
-        AppShortcut(
             intent: BestCardForMerchantIntent(),
             phrases: [
-                "Best card for \(\.$merchantName) in \(.applicationName)",
-                "Which card at \(\.$merchantName) \(.applicationName)",
-                "\(.applicationName) recommend card for \(\.$merchantName)"
+                "Best card for \(\.$merchant) in \(.applicationName)",
+                "Which card at \(\.$merchant) \(.applicationName)",
+                "\(.applicationName) for \(\.$merchant)"
             ],
             shortTitle: "Best Card",
             systemImageName: "star.fill"
