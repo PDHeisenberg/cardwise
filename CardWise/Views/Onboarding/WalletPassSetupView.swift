@@ -1,48 +1,47 @@
 // WalletPassSetupView.swift
 // CardWise
 //
-// Screen 3 of onboarding: Enable location notifications + generate in-app wallet cards
+// Screen 3 of onboarding: Add real Apple Wallet passes for each spending category.
+// Loads pre-signed .pkpass files from the app bundle and presents PKAddPassesViewController.
 
 import SwiftUI
-import UserNotifications
+import PassKit
 
 struct WalletPassSetupView: View {
     let onComplete: () -> Void
     @StateObject private var passService = PKPassGeneratorService.shared
+    @State private var loadedPasses: [PKPass] = []
+    @State private var showAddPasses = false
+    @State private var passesAdded = false
+    @State private var errorMessage: String?
     @State private var installedCategories: Set<MerchantCategory> = []
-    @State private var isInstalling = false
-    @State private var permissionGranted = false
 
     private let featuredCategories: [MerchantCategory] = [
         .dining, .groceries, .transport, .travel, .onlineShopping, .fuel
     ]
 
     var body: some View {
-        VStack(spacing: 32) {
+        VStack(spacing: 24) {
             Spacer()
 
+            // Icon
             Image(systemName: "wallet.pass.fill")
                 .font(.system(size: 80))
                 .foregroundStyle(.green)
                 .symbolRenderingMode(.hierarchical)
 
-            VStack(spacing: 16) {
-                Text("Enable Smart Cards")
+            // Title & description
+            VStack(spacing: 12) {
+                Text("Add to Apple Wallet")
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .multilineTextAlignment(.center)
 
-                Text("We'll create recommendation cards for each spending category and notify you at the right place and time.")
-                    .font(.title3)
+                Text("Add smart recommendation cards to your Wallet. They'll show you which credit card to use — right on your Lock Screen at the right place and time.")
+                    .font(.body)
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
-                    .padding(.horizontal)
-
-                Text("Cards update automatically as we learn your spending habits.")
-                    .font(.callout)
-                    .foregroundStyle(.tertiary)
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal, 32)
+                    .padding(.horizontal, 24)
             }
 
             // Category passes preview
@@ -56,68 +55,138 @@ struct WalletPassSetupView: View {
             }
             .padding(.horizontal, 24)
 
+            // Error message
+            if let error = errorMessage {
+                Text(error)
+                    .font(.caption)
+                    .foregroundStyle(.red)
+                    .padding(.horizontal)
+            }
+
             Spacer()
 
+            // Action buttons
             VStack(spacing: 12) {
-                Button(action: {
-                    installAllPasses()
-                }) {
+                if passesAdded {
+                    // Success state
                     HStack {
-                        if isInstalling {
-                            ProgressView()
-                                .tint(.white)
-                        }
-                        Text(isInstalling ? "Setting up..." : "Enable Smart Cards")
-                            .font(.headline)
+                        Image(systemName: "checkmark.circle.fill")
+                            .foregroundStyle(.green)
+                        Text("Passes added to Wallet!")
+                            .fontWeight(.semibold)
                     }
-                    .frame(maxWidth: .infinity)
+                    .font(.headline)
                     .padding()
-                    .background(Color.green)
-                    .foregroundColor(.white)
-                    .clipShape(RoundedRectangle(cornerRadius: 16))
+
+                    Button(action: onComplete) {
+                        Text("Continue")
+                            .font(.headline)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Color.blue)
+                            .foregroundColor(.white)
+                            .clipShape(RoundedRectangle(cornerRadius: 16))
+                    }
+                } else if !loadedPasses.isEmpty {
+                    // Add to Wallet button
+                    Button(action: {
+                        showAddPasses = true
+                    }) {
+                        HStack(spacing: 8) {
+                            Image(systemName: "wallet.pass.fill")
+                            Text("Add \(loadedPasses.count) Passes to Wallet")
+                                .fontWeight(.semibold)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.black)
+                        .foregroundColor(.white)
+                        .clipShape(RoundedRectangle(cornerRadius: 16))
+                    }
+                    .sheet(isPresented: $showAddPasses) {
+                        AddPassesSheetView(
+                            passes: loadedPasses,
+                            onDismiss: {
+                                showAddPasses = false
+                                checkIfPassesAdded()
+                            }
+                        )
+                    }
+                } else {
+                    // Loading or no passes available
+                    ProgressView("Loading passes...")
+                        .padding()
                 }
-                .disabled(isInstalling)
 
                 Button(action: onComplete) {
-                    Text("Skip for now")
+                    Text(passesAdded ? "" : "Skip for now")
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                 }
+                .opacity(passesAdded ? 0 : 1)
             }
             .padding(.horizontal, 32)
             .padding(.bottom, 60)
         }
+        .onAppear {
+            loadPasses()
+        }
     }
 
-    private func installAllPasses() {
-        isInstalling = true
+    private func loadPasses() {
+        loadedPasses = passService.loadAllPasses()
+        if loadedPasses.isEmpty {
+            errorMessage = "No wallet passes found in app bundle. Passes need to be generated with the signing script."
+        }
+        // Check which passes are already installed
+        installedCategories = passService.checkInstalledPasses()
+    }
 
-        Task {
-            // Request notification permission
-            let center = UNUserNotificationCenter.current()
-            let granted = try? await center.requestAuthorization(options: [.alert, .badge, .sound])
-            permissionGranted = granted ?? false
-
-            // Generate default wallet cards
-            await MainActor.run {
-                passService.generateDefaultCards()
+    private func checkIfPassesAdded() {
+        let newInstalled = passService.checkInstalledPasses()
+        if !newInstalled.isEmpty {
+            withAnimation(.spring(response: 0.3)) {
+                installedCategories = newInstalled
+                passesAdded = true
             }
+        }
+    }
+}
 
-            // Animate the card installation
-            for category in featuredCategories {
-                try? await Task.sleep(for: .milliseconds(250))
-                await MainActor.run {
-                    withAnimation(.spring(response: 0.3)) {
-                        installedCategories.insert(category)
-                    }
-                }
-            }
+/// UIViewControllerRepresentable wrapper for PKAddPassesViewController
+struct AddPassesSheetView: UIViewControllerRepresentable {
+    let passes: [PKPass]
+    let onDismiss: () -> Void
 
-            try? await Task.sleep(for: .milliseconds(500))
+    func makeUIViewController(context: Context) -> UINavigationController {
+        if let addController = PKAddPassesViewController(passes: passes) {
+            addController.delegate = context.coordinator
+            let nav = UINavigationController(rootViewController: addController)
+            return nav
+        }
+        // Fallback if controller creation fails
+        let fallback = UIViewController()
+        fallback.view.backgroundColor = .systemBackground
+        let nav = UINavigationController(rootViewController: fallback)
+        return nav
+    }
 
-            await MainActor.run {
-                isInstalling = false
-                onComplete()
+    func updateUIViewController(_ uiViewController: UINavigationController, context: Context) {}
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator(onDismiss: onDismiss)
+    }
+
+    class Coordinator: NSObject, PKAddPassesViewControllerDelegate {
+        let onDismiss: () -> Void
+
+        init(onDismiss: @escaping () -> Void) {
+            self.onDismiss = onDismiss
+        }
+
+        func addPassesViewControllerDidFinish(_ controller: PKAddPassesViewController) {
+            controller.dismiss(animated: true) {
+                self.onDismiss()
             }
         }
     }
@@ -135,7 +204,7 @@ struct WalletPassPreview: View {
                     .frame(height: 80)
 
                 VStack(spacing: 4) {
-                    Image(systemName: category.icon)
+                    Image(systemName: categoryIcon)
                         .font(.title2)
                         .foregroundStyle(.white)
 
@@ -153,6 +222,18 @@ struct WalletPassPreview: View {
                         .offset(x: 4, y: -4)
                 }
             }
+        }
+    }
+
+    private var categoryIcon: String {
+        switch category {
+        case .dining: return "fork.knife"
+        case .groceries: return "cart.fill"
+        case .transport: return "bus.fill"
+        case .travel: return "airplane"
+        case .onlineShopping: return "bag.fill"
+        case .fuel: return "fuelpump.fill"
+        default: return "creditcard.fill"
         }
     }
 

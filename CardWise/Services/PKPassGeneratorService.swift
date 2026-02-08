@@ -1,52 +1,37 @@
 // PKPassGeneratorService.swift
 // CardWise
 //
-// Generates Apple Wallet passes using PassKit framework.
-// Uses PKPass with in-app presentation via PKAddPassesViewController.
+// Loads pre-signed .pkpass bundles from the app's Resources/Passes/ directory
+// and presents them via PKAddPassesViewController for real Apple Wallet integration.
 
 import Foundation
 import PassKit
 import UIKit
 import CoreLocation
 
-/// Service that generates and presents Apple Wallet passes for card recommendations.
+/// Service that loads and presents real Apple Wallet passes for card recommendations.
 ///
-/// Strategy: Since .pkpass bundles require Apple Developer signing certificates,
-/// we use an in-app Wallet-style card UI and the PassKit API for pass presentation.
-/// For MVP, we create visual "pass cards" inside the app and use location-based
-/// notifications to surface recommendations at the right time.
-///
-/// When a Pass Type ID certificate is configured, this service can generate
-/// signed .pkpass files for real Wallet integration.
+/// Strategy: .pkpass files are pre-signed at build time using the generate_passes.sh script.
+/// The app bundles these signed passes and presents them to the user via PKAddPassesViewController
+/// during onboarding. Each pass represents a spending category (dining, groceries, etc.)
+/// and shows the user's best card recommendation for that category.
 final class PKPassGeneratorService: ObservableObject {
     static let shared = PKPassGeneratorService()
 
-    /// Represents a generated wallet recommendation card
-    struct WalletCard: Identifiable, Codable {
-        let id: UUID
-        let category: String  // MerchantCategory rawValue
-        var cardName: String
-        var rewardRate: String
-        var monthlySpend: Double
-        var monthlyRewards: Double
-        var relevantText: String
-        var isActive: Bool
-        let createdAt: Date
-        var updatedAt: Date
+    /// Spending categories that have bundled passes
+    static let passCategories: [MerchantCategory] = [
+        .dining, .groceries, .transport, .travel, .onlineShopping, .fuel
+    ]
 
-        var merchantCategory: MerchantCategory? {
-            MerchantCategory(rawValue: category)
-        }
-    }
+    /// Published state
+    @Published var passesAddedToWallet: Set<String> = []
+    @Published var loadError: String?
 
-    /// Published wallet cards for SwiftUI observation
-    @Published var walletCards: [WalletCard] = []
-
-    private let storageKey = "cardwise_wallet_cards"
+    private let passLibrary = PKPassLibrary()
     private let locationManager = CLLocationManager()
 
     private init() {
-        loadCards()
+        loadInstalledState()
     }
 
     // MARK: - Public API
@@ -56,157 +41,190 @@ final class PKPassGeneratorService: ObservableObject {
         PKPassLibrary.isPassLibraryAvailable()
     }
 
-    /// Generate default wallet cards for all main categories (before any cards detected)
-    func generateDefaultCards() {
-        let defaults: [(MerchantCategory, String, String)] = [
-            (.dining, "Set up your cards", "Detecting..."),
-            (.groceries, "Set up your cards", "Detecting..."),
-            (.transport, "Set up your cards", "Detecting..."),
-            (.travel, "Set up your cards", "Detecting..."),
-            (.onlineShopping, "Set up your cards", "Detecting..."),
-            (.fuel, "Set up your cards", "Detecting..."),
-        ]
-
-        var cards: [WalletCard] = []
-        for (category, cardName, rate) in defaults {
-            let card = WalletCard(
-                id: UUID(),
-                category: category.rawValue,
-                cardName: cardName,
-                rewardRate: rate,
-                monthlySpend: 0,
-                monthlyRewards: 0,
-                relevantText: "\(category.icon) Use your best \(category.displayName.lowercased()) card here",
-                isActive: true,
-                createdAt: Date(),
-                updatedAt: Date()
-            )
-            cards.append(card)
-        }
-
-        walletCards = cards
-        saveCards()
-
-        // Register geofences for location-based notifications
-        registerGeofences()
+    /// Check if passes can be added
+    var canAddPasses: Bool {
+        PKAddPassesViewController.canAddPasses()
     }
 
-    /// Update a wallet card with a real recommendation
-    func updateCard(
-        for category: MerchantCategory,
-        cardName: String,
-        rewardRate: String,
-        monthlySpend: Double = 0,
-        monthlyRewards: Double = 0
+    /// Load a single .pkpass file from the bundle
+    func loadPass(for category: MerchantCategory) -> PKPass? {
+        let filename = category.rawValue
+        guard let url = Bundle.main.url(forResource: filename, withExtension: "pkpass", subdirectory: "Passes") else {
+            // Also try without subdirectory (flat bundle)
+            guard let flatUrl = Bundle.main.url(forResource: filename, withExtension: "pkpass") else {
+                print("⚠️ Pass file not found: \(filename).pkpass")
+                return nil
+            }
+            return loadPassFromURL(flatUrl)
+        }
+        return loadPassFromURL(url)
+    }
+
+    private func loadPassFromURL(_ url: URL) -> PKPass? {
+        do {
+            let data = try Data(contentsOf: url)
+            let pass = try PKPass(data: data)
+            return pass
+        } catch {
+            print("❌ Failed to load pass from \(url.lastPathComponent): \(error)")
+            loadError = error.localizedDescription
+            return nil
+        }
+    }
+
+    /// Load all bundled passes
+    func loadAllPasses() -> [PKPass] {
+        var passes: [PKPass] = []
+        for category in Self.passCategories {
+            if let pass = loadPass(for: category) {
+                passes.append(pass)
+            }
+        }
+        return passes
+    }
+
+    /// Present the "Add to Wallet" UI for a single pass
+    func presentAddPass(
+        _ pass: PKPass,
+        from viewController: UIViewController,
+        completion: (() -> Void)? = nil
     ) {
-        if let index = walletCards.firstIndex(where: { $0.category == category.rawValue }) {
-            walletCards[index].cardName = cardName
-            walletCards[index].rewardRate = rewardRate
-            walletCards[index].monthlySpend = monthlySpend
-            walletCards[index].monthlyRewards = monthlyRewards
-            walletCards[index].relevantText = "\(category.icon) Use \(cardName) — \(rewardRate)"
-            walletCards[index].updatedAt = Date()
-        } else {
-            let card = WalletCard(
-                id: UUID(),
-                category: category.rawValue,
-                cardName: cardName,
-                rewardRate: rewardRate,
-                monthlySpend: monthlySpend,
-                monthlyRewards: monthlyRewards,
-                relevantText: "\(category.icon) Use \(cardName) — \(rewardRate)",
-                isActive: true,
-                createdAt: Date(),
-                updatedAt: Date()
-            )
-            walletCards.append(card)
+        guard canAddPasses else {
+            loadError = "This device cannot add passes to Wallet"
+            return
         }
-        saveCards()
-    }
 
-    /// Update all cards based on current portfolio recommendations
-    func updateAllCards(recommendations: [MerchantCategory: (CardProduct, RewardTier)],
-                        monthlySpend: [MerchantCategory: Double] = [:],
-                        monthlyRewards: [MerchantCategory: Double] = [:]) {
-        for (category, (card, tier)) in recommendations {
-            updateCard(
-                for: category,
-                cardName: card.displayName,
-                rewardRate: tier.rateDescription,
-                monthlySpend: monthlySpend[category] ?? 0,
-                monthlyRewards: monthlyRewards[category] ?? 0
-            )
+        let addController = PKAddPassesViewController(pass: pass)
+        addController?.delegate = AddPassDelegate.shared
+        AddPassDelegate.shared.completion = { [weak self] in
+            self?.markPassAdded(pass)
+            completion?()
+        }
+
+        if let addController = addController {
+            viewController.present(addController, animated: true)
         }
     }
 
-    // MARK: - Location-based notifications (simulates Wallet pass geofencing)
+    /// Present the "Add to Wallet" UI for multiple passes at once
+    func presentAddPasses(
+        _ passes: [PKPass],
+        from viewController: UIViewController,
+        completion: (() -> Void)? = nil
+    ) {
+        guard canAddPasses else {
+            loadError = "This device cannot add passes to Wallet"
+            return
+        }
 
-    /// Register geofence regions for location-based card recommendations
-    func registerGeofences() {
-        // Request location permission
+        guard !passes.isEmpty else {
+            loadError = "No passes to add"
+            return
+        }
+
+        let addController = PKAddPassesViewController(passes: passes)
+        addController?.delegate = AddPassDelegate.shared
+        AddPassDelegate.shared.completion = { [weak self] in
+            for pass in passes {
+                self?.markPassAdded(pass)
+            }
+            completion?()
+        }
+
+        if let addController = addController {
+            viewController.present(addController, animated: true)
+        }
+    }
+
+    /// Add passes directly to wallet without UI (requires user permission)
+    func addPassesSilently(_ passes: [PKPass]) {
+        guard isWalletAvailable else { return }
+        passLibrary.addPasses(passes) { [weak self] status in
+            DispatchQueue.main.async {
+                switch status {
+                case .shouldReviewPasses:
+                    // User needs to review — passes will show in Wallet pending
+                    for pass in passes {
+                        self?.markPassAdded(pass)
+                    }
+                case .didAddPasses:
+                    for pass in passes {
+                        self?.markPassAdded(pass)
+                    }
+                case .didCancelAddPasses:
+                    break
+                @unknown default:
+                    break
+                }
+            }
+        }
+    }
+
+    /// Check if a specific category pass is already in the wallet
+    func isPassInWallet(for category: MerchantCategory) -> Bool {
+        guard isWalletAvailable else { return false }
+
+        let serial = "cardwise-\(category.rawValue)-v1"
+        let passes = passLibrary.passes()
+        return passes.contains { $0.serialNumber == serial }
+    }
+
+    /// Check which passes are already installed
+    func checkInstalledPasses() -> Set<MerchantCategory> {
+        guard isWalletAvailable else { return [] }
+
+        var installed = Set<MerchantCategory>()
+        let walletPasses = passLibrary.passes()
+
+        for category in Self.passCategories {
+            let serial = "cardwise-\(category.rawValue)-v1"
+            if walletPasses.contains(where: { $0.serialNumber == serial }) {
+                installed.insert(category)
+            }
+        }
+
+        return installed
+    }
+
+    /// Get the number of available passes in the bundle
+    var availablePassCount: Int {
+        var count = 0
+        for category in Self.passCategories {
+            let filename = category.rawValue
+            if Bundle.main.url(forResource: filename, withExtension: "pkpass", subdirectory: "Passes") != nil ||
+               Bundle.main.url(forResource: filename, withExtension: "pkpass") != nil {
+                count += 1
+            }
+        }
+        return count
+    }
+
+    // MARK: - Location-based (supplements Wallet pass geofencing)
+
+    /// Register for location updates to complement pass location triggers
+    func requestLocationPermission() {
         locationManager.requestWhenInUseAuthorization()
-
-        let regions: [(String, CLLocationCoordinate2D, String)] = [
-            // Orchard Road — dining/shopping hub
-            ("orchard", CLLocationCoordinate2D(latitude: 1.3048, longitude: 103.8318),
-             "🍽️ Dining area — check CardWise for your best card"),
-            // Chinatown
-            ("chinatown", CLLocationCoordinate2D(latitude: 1.2834, longitude: 103.8441),
-             "🍽️ Great food nearby — use your best dining card"),
-            // Clarke Quay
-            ("clarkequay", CLLocationCoordinate2D(latitude: 1.2917, longitude: 103.8463),
-             "🍽️ Clarke Quay — check your best card"),
-            // Changi Airport
-            ("changi", CLLocationCoordinate2D(latitude: 1.3644, longitude: 103.9915),
-             "✈️ Travelling? Use your best travel card"),
-            // Vivocity (shopping)
-            ("vivocity", CLLocationCoordinate2D(latitude: 1.2644, longitude: 103.8223),
-             "🛍️ Shopping at VivoCity — check your best card"),
-        ]
-
-        for (id, coordinate, note) in regions {
-            let region = CLCircularRegion(
-                center: coordinate,
-                radius: 200,
-                identifier: "cardwise_\(id)"
-            )
-            region.notifyOnEntry = true
-            region.notifyOnExit = false
-
-            // Schedule a location notification
-            let content = UNMutableNotificationContent()
-            content.title = "CardWise"
-            content.body = note
-            content.sound = .default
-            content.categoryIdentifier = "CARD_RECOMMENDATION"
-
-            let trigger = UNLocationNotificationTrigger(region: region, repeats: true)
-            let request = UNNotificationRequest(
-                identifier: "cardwise_location_\(id)",
-                content: content,
-                trigger: trigger
-            )
-
-            UNUserNotificationCenter.current().add(request)
-        }
     }
 
     // MARK: - Persistence
 
-    private func saveCards() {
-        if let data = try? JSONEncoder().encode(walletCards) {
-            UserDefaults.standard.set(data, forKey: storageKey)
+    private func markPassAdded(_ pass: PKPass) {
+        passesAddedToWallet.insert(pass.serialNumber)
+        saveInstalledState()
+    }
+
+    private func saveInstalledState() {
+        let serials = Array(passesAddedToWallet)
+        UserDefaults.standard.set(serials, forKey: "cardwise_installed_passes")
+    }
+
+    private func loadInstalledState() {
+        if let serials = UserDefaults.standard.stringArray(forKey: "cardwise_installed_passes") {
+            passesAddedToWallet = Set(serials)
         }
     }
 
-    private func loadCards() {
-        if let data = UserDefaults.standard.data(forKey: storageKey),
-           let cards = try? JSONDecoder().decode([WalletCard].self, from: data) {
-            walletCards = cards
-        }
-    }
-
-    // MARK: - Pass Colors
+    // MARK: - Pass Colors (for UI)
 
     func backgroundColorForCategory(_ category: MerchantCategory) -> (red: Double, green: Double, blue: Double) {
         switch category {
@@ -216,7 +234,7 @@ final class PKPassGeneratorService: ObservableObject {
         case .travel: return (175/255, 82/255, 222/255)
         case .onlineShopping: return (255/255, 55/255, 95/255)
         case .entertainment: return (255/255, 59/255, 48/255)
-        case .fuel: return (255/255, 204/255, 0/255)
+        case .fuel: return (255/255, 179/255, 0/255)
         case .utilities: return (90/255, 200/255, 250/255)
         case .insurance: return (88/255, 86/255, 214/255)
         case .healthcare: return (0/255, 199/255, 190/255)
@@ -226,4 +244,96 @@ final class PKPassGeneratorService: ObservableObject {
         case .general: return (99/255, 99/255, 102/255)
         }
     }
+}
+
+// MARK: - PKAddPassesViewControllerDelegate
+
+private class AddPassDelegate: NSObject, PKAddPassesViewControllerDelegate {
+    static let shared = AddPassDelegate()
+    var completion: (() -> Void)?
+
+    func addPassesViewControllerDidFinish(_ controller: PKAddPassesViewController) {
+        controller.dismiss(animated: true) { [weak self] in
+            self?.completion?()
+            self?.completion = nil
+        }
+    }
+}
+
+// MARK: - SwiftUI Bridge for PKAddPassesViewController
+
+import SwiftUI
+
+/// SwiftUI wrapper for presenting PKAddPassesViewController
+struct AddPassesView: UIViewControllerRepresentable {
+    let passes: [PKPass]
+    let onDismiss: () -> Void
+
+    func makeUIViewController(context: Context) -> UIViewController {
+        let host = UIViewController()
+        // Present in the next run loop to avoid presentation conflicts
+        DispatchQueue.main.async {
+            let addController = PKAddPassesViewController(passes: passes)
+            addController?.delegate = context.coordinator
+            if let addController = addController {
+                host.present(addController, animated: true)
+            }
+        }
+        return host
+    }
+
+    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator(onDismiss: onDismiss)
+    }
+
+    class Coordinator: NSObject, PKAddPassesViewControllerDelegate {
+        let onDismiss: () -> Void
+
+        init(onDismiss: @escaping () -> Void) {
+            self.onDismiss = onDismiss
+        }
+
+        func addPassesViewControllerDidFinish(_ controller: PKAddPassesViewController) {
+            controller.dismiss(animated: true) { [weak self] in
+                self?.onDismiss()
+            }
+        }
+    }
+}
+
+/// SwiftUI view that presents the native "Add to Apple Wallet" button
+struct AddToWalletButton: View {
+    let passes: [PKPass]
+    @Binding var isPresented: Bool
+    let onComplete: () -> Void
+
+    var body: some View {
+        Button(action: {
+            isPresented = true
+        }) {
+            PKAddPassButtonWrapper()
+                .frame(width: 280, height: 48)
+        }
+        .sheet(isPresented: $isPresented) {
+            if !passes.isEmpty {
+                AddPassesView(passes: passes) {
+                    isPresented = false
+                    onComplete()
+                }
+            }
+        }
+    }
+}
+
+/// Wraps PKAddPassButton for use in SwiftUI
+struct PKAddPassButtonWrapper: UIViewRepresentable {
+    func makeUIView(context: Context) -> PKAddPassButton {
+        let button = PKAddPassButton(addPassButtonStyle: .black)
+        button.isUserInteractionEnabled = false  // Handled by parent SwiftUI button
+        return button
+    }
+
+    func updateUIView(_ uiView: PKAddPassButton, context: Context) {}
 }
