@@ -1,0 +1,1305 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2026-02-01",
+  "country": "SG",
+  "cards": [
+    {
+      "id": "dbs-live-fresh",
+      "name": "Live Fresh",
+      "issuer": "DBS",
+      "fullName": "DBS Live Fresh Visa Card",
+      "country": "SG",
+      "network": "visa",
+      "annualFee": 196.20,
+      "annualFeeWaived": true,
+      "minIncome": 30000,
+      "aliases": ["DBS Live Fresh", "DBS Live Fresh Visa", "DBS Live Fresh Card", "Live Fresh Visa"],
+      "rewardTiers": [
+        {
+          "id": "dbs-lf-shopping",
+          "categories": ["onlineShopping", "departmentStore"],
+          "rate": 6.0,
+          "rateType": "cashback",
+          "monthlyCap": 50.0,
+          "minSpend": 800.0,
+          "conditions": "Min S$800/month spend. S$50 cap on shopping."
+        },
+        {
+          "id": "dbs-lf-transport",
+          "categories": ["transport"],
+          "rate": 6.0,
+          "rateType": "cashback",
+          "monthlyCap": 20.0,
+          "minSpend": 800.0,
+          "conditions": "Min S$800/month spend. S$20 cap on transport."
+        },
+        {
+          "id": "dbs-lf-general",
+          "categories": ["dining", "groceries", "fuel", "utilities", "insurance", "healthcare", "education", "entertainment", "travel", "contactless", "general"],
+          "rate": 0.3,
+          "rateType": "cashback",
+          "monthlyCap": null,
+          "minSpend": null,
+          "conditions": "Unlimited 0.3% on all other eligible spend."
+        }
+      ]
+    },
+    {
+      "id": "dbs-altitude-visa",
+      "name": "Altitude Visa Signature",
+      "issuer": "DBS",
+      "fullName": "DBS Altitude Visa Signature Card",
+      "country": "SG",
+      "network": "visa",
+      "annualFee": 196.20,
+      "annualFeeWaived": true,
+      "minIncome": 30000,
+      "aliases": ["DBS Altitude", "DBS Altitude Visa", "DBS Altitude Visa Signature", "Altitude Visa"],
+      "rewardTiers": [
+        {
+          "id": "dbs-alt-overseas",
+          "categories": ["travel"],
+          "rate": 2.2,
+          "rateType": "miles",
+          "monthlyCap": null,
+          "minSpend": null,
+          "conditions": "2.2 mpd on overseas spend in foreign currency."
+        },
+        {
+          "id": "dbs-alt-online",
+          "categories": ["onlineShopping"],
+          "rate": 2.0,
+          "rateType": "miles",
+          "monthlyCap": null,
+          "minSpend": null,
+          "conditions": "2 mpd on online spend."
+        },
+        {
+          "id": "dbs-alt-general",
+          "categories": ["dining", "groceries", "transport", "entertainment", "fuel", "utilities", "insurance", "healthcare", "education", "departmentStore", "contactless", "general"],
+          "rate": 1.2,
+          "rateType": "miles",
+          "monthlyCap": null,
+          "minSpend": null,
+          "conditions": "1.2 mpd on all other local spend."
+        }
+      ]
+    },
+    {
+      "id": "dbs-womans-world",
+      "name": "Woman's World Card",
+      "issuer": "DBS",
+      "fullName": "DBS Woman's World Card",
+      "country": "SG",
+      "network": "mastercard",
+      "annualFee": 196.20,
+      "annualFeeWaived": true,
+      "minIncome": 80000,
+      "aliases": ["DBS Woman's World", "DBS Womans World", "DBS WWC", "Woman's World Card", "DBS Woman's World Mastercard"],
+      "rewardTiers": [
+        {
+          "id": "dbs-wwc-bonus",
+          "categories": ["onlineShopping", "contactless", "dining"],
+          "rate": 4.0,
+          "rateType": "miles",
+          "monthlyCap": 1000.0,
+          "minSpend": null,
+          "conditions": "4 mpd on online, contactless, and dining. Cap S$1,000/month."
+        },
+        {
+          "id": "dbs-wwc-general",
+          "categories": ["groceries", "transport", "travel", "entertainment", "fuel", "utilities", "insurance", "healthcare", "education", "departmentStore", "general"],
+          "rate": 0.4,
+          "rateType": "miles",
+          "monthlyCap": null,
+          "minSpend": null,
+          "conditions": "0.4 mpd on all other spend."
+        }
+      ]
+    },
+    {
+      "id": "dbs-yuu",
+      "name": "yuu Card",
+      "issuer": "DBS",
+      "fullName": "DBS yuu Visa Card",
+      "country": "SG",
+      "network": "visa",
+      "annualFee": 196.20,
+      "annualFeeWaived": true,
+      "minIncome": 30000,
+      "aliases": ["DBS yuu", "DBS yuu Card", "DBS yuu Visa"],
+      "rewardTiers": [
+        {
+          "id": "dbs-yuu-partner",
+          "categories": ["groceries", "dining"],
+          "rate": 5.0,
+          "rateType": "cashback",
+          "monthlyCap": null,
+          "minSpend": null,
+          "conditions": "5% at yuu merchants (Cold Storage, Giant, foodpanda, Gojek) with no min spend. Up to 18% with S$800 min spend."
+        },
+        {
+          "id": "dbs-yuu-general",
+          "categories": ["onlineShopping", "transport", "travel", "entertainment", "fuel", "utilities", "insurance", "healthcare", "education", "departmentStore", "contactless", "general"],
+          "rate": 0.3,
+          "rateType": "cashback",
+          "monthlyCap": null,
+          "minSpend": null,
+          "conditions": "0.3% on all other spend."
+        }
+      ]
+    },
+    {
+      "id": "dbs-takashimaya",
+      "name": "Takashimaya Visa",
+      "issuer": "DBS",
+      "fullName": "DBS Takashimaya Visa Card",
+      "country": "SG",
+      "network": "visa",
+      "annualFee": 196.20,
+      "annualFeeWaived": true,
+      "minIncome": 30000,
+      "aliases": ["DBS Takashimaya", "Takashimaya Card", "DBS Taka"],
+      "rewardTiers": [
+        {
+          "id": "dbs-taka-store",
+          "categories": ["departmentStore"],
+          "rate": 6.0,
+          "rateType": "cashback",
+          "monthlyCap": null,
+          "minSpend": null,
+          "conditions": "6% rebate at Takashimaya Singapore."
+        },
+        {
+          "id": "dbs-taka-general",
+          "categories": ["dining", "groceries", "onlineShopping", "transport", "travel", "entertainment", "fuel", "utilities", "insurance", "healthcare", "education", "contactless", "general"],
+          "rate": 0.3,
+          "rateType": "cashback",
+          "monthlyCap": null,
+          "minSpend": null,
+          "conditions": "0.3% on all other spend."
+        }
+      ]
+    },
+    {
+      "id": "ocbc-365",
+      "name": "365",
+      "issuer": "OCBC",
+      "fullName": "OCBC 365 Credit Card",
+      "country": "SG",
+      "network": "visa",
+      "annualFee": 196.20,
+      "annualFeeWaived": true,
+      "minIncome": 30000,
+      "aliases": ["OCBC 365", "OCBC 365 Card", "OCBC 365 Visa", "OCBC 365 Credit Card"],
+      "rewardTiers": [
+        {
+          "id": "ocbc-365-fuel",
+          "categories": ["fuel"],
+          "rate": 6.0,
+          "rateType": "cashback",
+          "monthlyCap": 160.0,
+          "minSpend": 800.0,
+          "conditions": "6% cashback on petrol. Min S$800/month, cap S$160/month total."
+        },
+        {
+          "id": "ocbc-365-dining",
+          "categories": ["dining"],
+          "rate": 5.0,
+          "rateType": "cashback",
+          "monthlyCap": 160.0,
+          "minSpend": 800.0,
+          "conditions": "5% on dining incl. food delivery. Min S$800/month."
+        },
+        {
+          "id": "ocbc-365-groceries",
+          "categories": ["groceries", "transport", "utilities"],
+          "rate": 3.0,
+          "rateType": "cashback",
+          "monthlyCap": 160.0,
+          "minSpend": 800.0,
+          "conditions": "3% on groceries, land transport, streaming, utilities, EV charging."
+        },
+        {
+          "id": "ocbc-365-general",
+          "categories": ["onlineShopping", "travel", "entertainment", "insurance", "healthcare", "education", "departmentStore", "contactless", "general"],
+          "rate": 0.25,
+          "rateType": "cashback",
+          "monthlyCap": null,
+          "minSpend": null,
+          "conditions": "0.25% on all other spend (below S$800 threshold)."
+        }
+      ]
+    },
+    {
+      "id": "ocbc-frank",
+      "name": "FRANK",
+      "issuer": "OCBC",
+      "fullName": "OCBC FRANK Credit Card",
+      "country": "SG",
+      "network": "visa",
+      "annualFee": 196.20,
+      "annualFeeWaived": true,
+      "minIncome": 30000,
+      "aliases": ["OCBC FRANK", "OCBC Frank Card", "Frank Card", "FRANK Credit Card"],
+      "rewardTiers": [
+        {
+          "id": "ocbc-frank-online",
+          "categories": ["onlineShopping"],
+          "rate": 8.0,
+          "rateType": "cashback",
+          "monthlyCap": 100.0,
+          "minSpend": 800.0,
+          "conditions": "8% on online and foreign currency spend. Min S$800/month."
+        },
+        {
+          "id": "ocbc-frank-general",
+          "categories": ["dining", "groceries", "transport", "travel", "entertainment", "fuel", "utilities", "insurance", "healthcare", "education", "departmentStore", "contactless", "general"],
+          "rate": 0.3,
+          "rateType": "cashback",
+          "monthlyCap": null,
+          "minSpend": null,
+          "conditions": "0.3% on all other spend."
+        }
+      ]
+    },
+    {
+      "id": "ocbc-titanium",
+      "name": "Titanium Rewards",
+      "issuer": "OCBC",
+      "fullName": "OCBC Titanium Rewards Card",
+      "country": "SG",
+      "network": "mastercard",
+      "annualFee": 196.20,
+      "annualFeeWaived": true,
+      "minIncome": 30000,
+      "aliases": ["OCBC Titanium", "OCBC Titanium Rewards", "Titanium Rewards Card"],
+      "rewardTiers": [
+        {
+          "id": "ocbc-ti-bonus",
+          "categories": ["dining", "onlineShopping", "departmentStore", "entertainment"],
+          "rate": 4.0,
+          "rateType": "points",
+          "monthlyCap": 1000.0,
+          "minSpend": null,
+          "conditions": "10X OCBC$ (4 mpd equiv.) on selected categories."
+        },
+        {
+          "id": "ocbc-ti-general",
+          "categories": ["groceries", "transport", "travel", "fuel", "utilities", "insurance", "healthcare", "education", "contactless", "general"],
+          "rate": 1.0,
+          "rateType": "points",
+          "monthlyCap": null,
+          "minSpend": null,
+          "conditions": "1X OCBC$ on all other spend."
+        }
+      ]
+    },
+    {
+      "id": "ocbc-voyage",
+      "name": "Voyage",
+      "issuer": "OCBC",
+      "fullName": "OCBC Voyage Card",
+      "country": "SG",
+      "network": "visa",
+      "annualFee": 535.00,
+      "annualFeeWaived": false,
+      "minIncome": 120000,
+      "aliases": ["OCBC Voyage", "OCBC Voyage Card", "Voyage Card"],
+      "rewardTiers": [
+        {
+          "id": "ocbc-voyage-all",
+          "categories": ["dining", "groceries", "onlineShopping", "transport", "travel", "entertainment", "fuel", "utilities", "insurance", "healthcare", "education", "departmentStore", "contactless", "general"],
+          "rate": 2.2,
+          "rateType": "miles",
+          "monthlyCap": null,
+          "minSpend": null,
+          "conditions": "2.2 mpd on all spend with S$4,000+ monthly. 1.2 mpd under S$4K."
+        }
+      ]
+    },
+    {
+      "id": "uob-one",
+      "name": "One Card",
+      "issuer": "UOB",
+      "fullName": "UOB One Card",
+      "country": "SG",
+      "network": "visa",
+      "annualFee": 196.20,
+      "annualFeeWaived": true,
+      "minIncome": 30000,
+      "aliases": ["UOB One", "UOB One Card", "UOB One Visa"],
+      "rewardTiers": [
+        {
+          "id": "uob-one-bonus",
+          "categories": ["groceries", "dining", "transport"],
+          "rate": 10.0,
+          "rateType": "cashback",
+          "monthlyCap": 300.0,
+          "minSpend": 2000.0,
+          "conditions": "Up to 10% cashback on Grab, McDonald's, Cold Storage, Giant, SimplyGo. S$2,000/month min spend, min 5 transactions. Quarterly payout."
+        },
+        {
+          "id": "uob-one-mid",
+          "categories": ["groceries", "dining", "transport"],
+          "rate": 3.33,
+          "rateType": "cashback",
+          "monthlyCap": 100.0,
+          "minSpend": 600.0,
+          "conditions": "3.33% on all retail spend. S$600/month min spend, min 5 transactions."
+        },
+        {
+          "id": "uob-one-general",
+          "categories": ["onlineShopping", "travel", "entertainment", "fuel", "utilities", "insurance", "healthcare", "education", "departmentStore", "contactless", "general"],
+          "rate": 3.33,
+          "rateType": "cashback",
+          "monthlyCap": 100.0,
+          "minSpend": 600.0,
+          "conditions": "3.33% on all retail spend. S$600/month, 5 transactions."
+        }
+      ]
+    },
+    {
+      "id": "uob-preferred-platinum",
+      "name": "Preferred Platinum",
+      "issuer": "UOB",
+      "fullName": "UOB Preferred Platinum Visa Card",
+      "country": "SG",
+      "network": "visa",
+      "annualFee": 196.20,
+      "annualFeeWaived": true,
+      "minIncome": 30000,
+      "aliases": ["UOB Preferred Platinum", "UOB PPV", "Preferred Platinum Visa"],
+      "rewardTiers": [
+        {
+          "id": "uob-ppv-contactless",
+          "categories": ["contactless"],
+          "rate": 4.0,
+          "rateType": "miles",
+          "monthlyCap": 600.0,
+          "minSpend": null,
+          "conditions": "4 mpd on mobile contactless (Apple Pay/Google Pay). S$600 cap/month."
+        },
+        {
+          "id": "uob-ppv-online",
+          "categories": ["onlineShopping"],
+          "rate": 4.0,
+          "rateType": "miles",
+          "monthlyCap": 600.0,
+          "minSpend": null,
+          "conditions": "4 mpd on selected online transactions. S$600 cap/month."
+        },
+        {
+          "id": "uob-ppv-general",
+          "categories": ["dining", "groceries", "transport", "travel", "entertainment", "fuel", "utilities", "insurance", "healthcare", "education", "departmentStore", "general"],
+          "rate": 0.4,
+          "rateType": "miles",
+          "monthlyCap": null,
+          "minSpend": null,
+          "conditions": "0.4 mpd on all other spend."
+        }
+      ]
+    },
+    {
+      "id": "uob-prvi-miles",
+      "name": "PRVI Miles",
+      "issuer": "UOB",
+      "fullName": "UOB PRVI Miles Card",
+      "country": "SG",
+      "network": "visa",
+      "annualFee": 256.80,
+      "annualFeeWaived": true,
+      "minIncome": 50000,
+      "aliases": ["UOB PRVI Miles", "UOB PRVI", "PRVI Miles Card"],
+      "rewardTiers": [
+        {
+          "id": "uob-prvi-overseas",
+          "categories": ["travel"],
+          "rate": 2.4,
+          "rateType": "miles",
+          "monthlyCap": null,
+          "minSpend": null,
+          "conditions": "2.4 mpd on overseas spend in foreign currency."
+        },
+        {
+          "id": "uob-prvi-general",
+          "categories": ["dining", "groceries", "onlineShopping", "transport", "entertainment", "fuel", "utilities", "insurance", "healthcare", "education", "departmentStore", "contactless", "general"],
+          "rate": 1.4,
+          "rateType": "miles",
+          "monthlyCap": null,
+          "minSpend": null,
+          "conditions": "1.4 mpd on all local spend."
+        }
+      ]
+    },
+    {
+      "id": "uob-visa-signature",
+      "name": "Visa Signature",
+      "issuer": "UOB",
+      "fullName": "UOB Visa Signature Card",
+      "country": "SG",
+      "network": "visa",
+      "annualFee": 196.20,
+      "annualFeeWaived": true,
+      "minIncome": 50000,
+      "aliases": ["UOB Visa Signature", "UOB Visa Sig", "UOB VS"],
+      "rewardTiers": [
+        {
+          "id": "uob-vs-contactless",
+          "categories": ["contactless"],
+          "rate": 4.0,
+          "rateType": "miles",
+          "monthlyCap": 1200.0,
+          "minSpend": null,
+          "conditions": "4 mpd on mobile contactless. S$1,200 cap/month (split into sub-caps)."
+        },
+        {
+          "id": "uob-vs-simplygo",
+          "categories": ["transport"],
+          "rate": 4.0,
+          "rateType": "miles",
+          "monthlyCap": 1200.0,
+          "minSpend": null,
+          "conditions": "4 mpd on SimplyGo. S$1,200 cap/month."
+        },
+        {
+          "id": "uob-vs-general",
+          "categories": ["dining", "groceries", "onlineShopping", "travel", "entertainment", "fuel", "utilities", "insurance", "healthcare", "education", "departmentStore", "general"],
+          "rate": 0.4,
+          "rateType": "miles",
+          "monthlyCap": null,
+          "minSpend": null,
+          "conditions": "0.4 mpd on all other spend."
+        }
+      ]
+    },
+    {
+      "id": "uob-ladys-solitaire",
+      "name": "Lady's Solitaire",
+      "issuer": "UOB",
+      "fullName": "UOB Lady's Solitaire Card",
+      "country": "SG",
+      "network": "mastercard",
+      "annualFee": 196.20,
+      "annualFeeWaived": true,
+      "minIncome": 80000,
+      "aliases": ["UOB Lady's Solitaire", "UOB Ladys Solitaire", "Lady's Solitaire Card"],
+      "rewardTiers": [
+        {
+          "id": "uob-ls-bonus",
+          "categories": ["dining", "entertainment", "onlineShopping", "departmentStore"],
+          "rate": 4.0,
+          "rateType": "miles",
+          "monthlyCap": 1500.0,
+          "minSpend": null,
+          "conditions": "4 mpd on fashion, beauty, dining. Split into 2x S$750 sub-caps/month."
+        },
+        {
+          "id": "uob-ls-general",
+          "categories": ["groceries", "transport", "travel", "fuel", "utilities", "insurance", "healthcare", "education", "contactless", "general"],
+          "rate": 0.4,
+          "rateType": "miles",
+          "monthlyCap": null,
+          "minSpend": null,
+          "conditions": "0.4 mpd on all other spend."
+        }
+      ]
+    },
+    {
+      "id": "citi-rewards",
+      "name": "Rewards",
+      "issuer": "Citi",
+      "fullName": "Citi Rewards Card",
+      "country": "SG",
+      "network": "visa",
+      "annualFee": 196.20,
+      "annualFeeWaived": true,
+      "minIncome": 30000,
+      "aliases": ["Citi Rewards", "Citi Rewards Card", "Citibank Rewards", "Citibank Rewards Card", "Citi Rewards Visa"],
+      "rewardTiers": [
+        {
+          "id": "citi-rw-bonus",
+          "categories": ["onlineShopping", "departmentStore", "dining"],
+          "rate": 4.0,
+          "rateType": "miles",
+          "monthlyCap": 1000.0,
+          "minSpend": null,
+          "conditions": "10X points (4 mpd) on online, fashion/department stores. S$1,000 cap/month."
+        },
+        {
+          "id": "citi-rw-general",
+          "categories": ["groceries", "transport", "travel", "entertainment", "fuel", "utilities", "insurance", "healthcare", "education", "contactless", "general"],
+          "rate": 0.4,
+          "rateType": "miles",
+          "monthlyCap": null,
+          "minSpend": null,
+          "conditions": "1X points (0.4 mpd) on all other spend."
+        }
+      ]
+    },
+    {
+      "id": "citi-premiermiles",
+      "name": "PremierMiles",
+      "issuer": "Citi",
+      "fullName": "Citi PremierMiles Card",
+      "country": "SG",
+      "network": "visa",
+      "annualFee": 196.20,
+      "annualFeeWaived": true,
+      "minIncome": 30000,
+      "aliases": ["Citi PremierMiles", "Citi Premier Miles", "Citibank PremierMiles"],
+      "rewardTiers": [
+        {
+          "id": "citi-pm-overseas",
+          "categories": ["travel"],
+          "rate": 2.0,
+          "rateType": "miles",
+          "monthlyCap": null,
+          "minSpend": null,
+          "conditions": "2 mpd on overseas spend in foreign currency."
+        },
+        {
+          "id": "citi-pm-local",
+          "categories": ["dining", "groceries", "onlineShopping", "transport", "entertainment", "fuel", "utilities", "insurance", "healthcare", "education", "departmentStore", "contactless", "general"],
+          "rate": 1.2,
+          "rateType": "miles",
+          "monthlyCap": null,
+          "minSpend": null,
+          "conditions": "1.2 mpd on all local spend."
+        }
+      ]
+    },
+    {
+      "id": "citi-cashback-plus",
+      "name": "Cash Back+",
+      "issuer": "Citi",
+      "fullName": "Citi Cash Back+ Card",
+      "country": "SG",
+      "network": "mastercard",
+      "annualFee": 196.20,
+      "annualFeeWaived": true,
+      "minIncome": 30000,
+      "aliases": ["Citi Cash Back+", "Citi Cashback Plus", "Citi Cash Back Plus", "Citibank Cash Back+"],
+      "rewardTiers": [
+        {
+          "id": "citi-cbp-all",
+          "categories": ["dining", "groceries", "onlineShopping", "transport", "travel", "entertainment", "fuel", "utilities", "insurance", "healthcare", "education", "departmentStore", "contactless", "general"],
+          "rate": 1.6,
+          "rateType": "cashback",
+          "monthlyCap": null,
+          "minSpend": null,
+          "conditions": "Flat 1.6% cashback on everything. No min spend, no cap."
+        }
+      ]
+    },
+    {
+      "id": "citi-cashback",
+      "name": "Cash Back",
+      "issuer": "Citi",
+      "fullName": "Citi Cash Back Card",
+      "country": "SG",
+      "network": "visa",
+      "annualFee": 196.20,
+      "annualFeeWaived": true,
+      "minIncome": 30000,
+      "aliases": ["Citi Cash Back", "Citi Cashback", "Citibank Cash Back"],
+      "rewardTiers": [
+        {
+          "id": "citi-cb-fuel",
+          "categories": ["fuel", "transport"],
+          "rate": 8.0,
+          "rateType": "cashback",
+          "monthlyCap": 25.0,
+          "minSpend": 800.0,
+          "conditions": "8% cashback on private commute and petrol. Min S$800/month."
+        },
+        {
+          "id": "citi-cb-dining",
+          "categories": ["dining", "groceries"],
+          "rate": 6.0,
+          "rateType": "cashback",
+          "monthlyCap": 25.0,
+          "minSpend": 800.0,
+          "conditions": "6% cashback on dining and groceries. Min S$800/month."
+        },
+        {
+          "id": "citi-cb-general",
+          "categories": ["onlineShopping", "travel", "entertainment", "utilities", "insurance", "healthcare", "education", "departmentStore", "contactless", "general"],
+          "rate": 0.25,
+          "rateType": "cashback",
+          "monthlyCap": null,
+          "minSpend": null,
+          "conditions": "0.25% on all other spend."
+        }
+      ]
+    },
+    {
+      "id": "citi-smrt",
+      "name": "SMRT Card",
+      "issuer": "Citi",
+      "fullName": "Citi SMRT Card",
+      "country": "SG",
+      "network": "visa",
+      "annualFee": 196.20,
+      "annualFeeWaived": true,
+      "minIncome": 30000,
+      "aliases": ["Citi SMRT", "Citi SMRT Card"],
+      "rewardTiers": [
+        {
+          "id": "citi-smrt-bonus",
+          "categories": ["groceries", "onlineShopping", "transport"],
+          "rate": 5.0,
+          "rateType": "cashback",
+          "monthlyCap": null,
+          "minSpend": 500.0,
+          "conditions": "5% savings on supermarkets, online purchases, taxi and public transport (SimplyGo)."
+        },
+        {
+          "id": "citi-smrt-general",
+          "categories": ["dining", "travel", "entertainment", "fuel", "utilities", "insurance", "healthcare", "education", "departmentStore", "contactless", "general"],
+          "rate": 0.25,
+          "rateType": "cashback",
+          "monthlyCap": null,
+          "minSpend": null,
+          "conditions": "0.25% on all other spend."
+        }
+      ]
+    },
+    {
+      "id": "citi-prestige",
+      "name": "Prestige",
+      "issuer": "Citi",
+      "fullName": "Citi Prestige Card",
+      "country": "SG",
+      "network": "visa",
+      "annualFee": 642.00,
+      "annualFeeWaived": false,
+      "minIncome": 120000,
+      "aliases": ["Citi Prestige", "Citibank Prestige"],
+      "rewardTiers": [
+        {
+          "id": "citi-pres-all",
+          "categories": ["dining", "groceries", "onlineShopping", "transport", "travel", "entertainment", "fuel", "utilities", "insurance", "healthcare", "education", "departmentStore", "contactless", "general"],
+          "rate": 1.2,
+          "rateType": "miles",
+          "monthlyCap": null,
+          "minSpend": null,
+          "conditions": "1.2 mpd on all spend. 4th night free on hotels. 12 lounge visits/year."
+        }
+      ]
+    },
+    {
+      "id": "hsbc-revolution",
+      "name": "Revolution",
+      "issuer": "HSBC",
+      "fullName": "HSBC Revolution Credit Card",
+      "country": "SG",
+      "network": "visa",
+      "annualFee": 0,
+      "annualFeeWaived": true,
+      "minIncome": 65000,
+      "aliases": ["HSBC Revolution", "HSBC Revolution Card", "HSBC Revolution Visa"],
+      "rewardTiers": [
+        {
+          "id": "hsbc-rev-online",
+          "categories": ["onlineShopping", "contactless"],
+          "rate": 4.0,
+          "rateType": "miles",
+          "monthlyCap": 1500.0,
+          "minSpend": null,
+          "conditions": "10X points (4 mpd / 2.5% cashback) on online and contactless spend. Cap S$1,500/month. (Promo till Feb 2026 incl. travel & contactless)."
+        },
+        {
+          "id": "hsbc-rev-dining",
+          "categories": ["dining"],
+          "rate": 4.0,
+          "rateType": "miles",
+          "monthlyCap": 1500.0,
+          "minSpend": null,
+          "conditions": "10X points (4 mpd) on dining."
+        },
+        {
+          "id": "hsbc-rev-general",
+          "categories": ["groceries", "transport", "travel", "entertainment", "fuel", "utilities", "insurance", "healthcare", "education", "departmentStore", "general"],
+          "rate": 0.4,
+          "rateType": "miles",
+          "monthlyCap": null,
+          "minSpend": null,
+          "conditions": "1X point (0.4 mpd) on all other spend."
+        }
+      ]
+    },
+    {
+      "id": "hsbc-live-plus",
+      "name": "Live+",
+      "issuer": "HSBC",
+      "fullName": "HSBC Live+ Credit Card",
+      "country": "SG",
+      "network": "visa",
+      "annualFee": 196.20,
+      "annualFeeWaived": true,
+      "minIncome": 30000,
+      "aliases": ["HSBC Live+", "HSBC Live Plus", "HSBC Live+ Card"],
+      "rewardTiers": [
+        {
+          "id": "hsbc-lp-lifestyle",
+          "categories": ["dining", "onlineShopping", "entertainment"],
+          "rate": 8.0,
+          "rateType": "cashback",
+          "monthlyCap": null,
+          "minSpend": 800.0,
+          "conditions": "8% cashback on dining, shopping, entertainment. Min S$800/month."
+        },
+        {
+          "id": "hsbc-lp-fuel",
+          "categories": ["fuel"],
+          "rate": 5.0,
+          "rateType": "cashback",
+          "monthlyCap": null,
+          "minSpend": 800.0,
+          "conditions": "5% cashback on petrol."
+        },
+        {
+          "id": "hsbc-lp-general",
+          "categories": ["groceries", "transport", "travel", "utilities", "insurance", "healthcare", "education", "departmentStore", "contactless", "general"],
+          "rate": 0.3,
+          "rateType": "cashback",
+          "monthlyCap": null,
+          "minSpend": null,
+          "conditions": "0.3% on all other spend."
+        }
+      ]
+    },
+    {
+      "id": "hsbc-advance",
+      "name": "Advance",
+      "issuer": "HSBC",
+      "fullName": "HSBC Advance Credit Card",
+      "country": "SG",
+      "network": "visa",
+      "annualFee": 196.20,
+      "annualFeeWaived": true,
+      "minIncome": 65000,
+      "aliases": ["HSBC Advance", "HSBC Advance Card"],
+      "rewardTiers": [
+        {
+          "id": "hsbc-adv-all",
+          "categories": ["dining", "groceries", "onlineShopping", "transport", "travel", "entertainment", "fuel", "utilities", "insurance", "healthcare", "education", "departmentStore", "contactless", "general"],
+          "rate": 2.5,
+          "rateType": "cashback",
+          "monthlyCap": 70.0,
+          "minSpend": 2000.0,
+          "conditions": "2.5% on all spend when monthly spend exceeds S$2,000. 1.5% with no min spend. Cap S$70/month."
+        }
+      ]
+    },
+    {
+      "id": "hsbc-visa-infinite",
+      "name": "Visa Infinite",
+      "issuer": "HSBC",
+      "fullName": "HSBC Visa Infinite Card",
+      "country": "SG",
+      "network": "visa",
+      "annualFee": 490.00,
+      "annualFeeWaived": false,
+      "minIncome": 120000,
+      "aliases": ["HSBC Visa Infinite", "HSBC Infinite"],
+      "rewardTiers": [
+        {
+          "id": "hsbc-vi-all",
+          "categories": ["dining", "groceries", "onlineShopping", "transport", "travel", "entertainment", "fuel", "utilities", "insurance", "healthcare", "education", "departmentStore", "contactless", "general"],
+          "rate": 2.0,
+          "rateType": "miles",
+          "monthlyCap": null,
+          "minSpend": null,
+          "conditions": "2 mpd on all spend. Airport lounge access."
+        }
+      ]
+    },
+    {
+      "id": "hsbc-travelone",
+      "name": "TravelOne",
+      "issuer": "HSBC",
+      "fullName": "HSBC TravelOne Credit Card",
+      "country": "SG",
+      "network": "visa",
+      "annualFee": 196.20,
+      "annualFeeWaived": true,
+      "minIncome": 30000,
+      "aliases": ["HSBC TravelOne", "HSBC Travel One"],
+      "rewardTiers": [
+        {
+          "id": "hsbc-to-overseas",
+          "categories": ["travel"],
+          "rate": 2.4,
+          "rateType": "miles",
+          "monthlyCap": null,
+          "minSpend": null,
+          "conditions": "2.4 mpd on overseas spend. Best FCY earn rate among HSBC cards."
+        },
+        {
+          "id": "hsbc-to-local",
+          "categories": ["dining", "groceries", "onlineShopping", "transport", "entertainment", "fuel", "utilities", "insurance", "healthcare", "education", "departmentStore", "contactless", "general"],
+          "rate": 1.0,
+          "rateType": "miles",
+          "monthlyCap": null,
+          "minSpend": null,
+          "conditions": "1 mpd on all local spend."
+        }
+      ]
+    },
+    {
+      "id": "amex-true-cashback",
+      "name": "True Cashback",
+      "issuer": "AMEX",
+      "fullName": "American Express True Cashback Card",
+      "country": "SG",
+      "network": "amex",
+      "annualFee": 174.40,
+      "annualFeeWaived": true,
+      "minIncome": 30000,
+      "aliases": ["Amex True Cashback", "AMEX True Cashback", "American Express True Cashback", "True Cashback Card"],
+      "rewardTiers": [
+        {
+          "id": "amex-tc-promo",
+          "categories": ["dining", "groceries", "onlineShopping", "transport", "travel", "entertainment", "fuel", "utilities", "insurance", "healthcare", "education", "departmentStore", "contactless", "general"],
+          "rate": 3.0,
+          "rateType": "cashback",
+          "monthlyCap": 5000.0,
+          "minSpend": null,
+          "conditions": "3% cashback for first 6 months (up to S$5,000 spend). Then 1.5% unlimited."
+        }
+      ]
+    },
+    {
+      "id": "amex-krisflyer",
+      "name": "KrisFlyer",
+      "issuer": "AMEX",
+      "fullName": "American Express Singapore Airlines KrisFlyer Credit Card",
+      "country": "SG",
+      "network": "amex",
+      "annualFee": 176.55,
+      "annualFeeWaived": true,
+      "minIncome": 30000,
+      "aliases": ["Amex KrisFlyer", "AMEX KrisFlyer", "SIA KrisFlyer Amex", "KrisFlyer Credit Card", "AMEX SIA"],
+      "rewardTiers": [
+        {
+          "id": "amex-kf-sia",
+          "categories": ["travel"],
+          "rate": 2.0,
+          "rateType": "miles",
+          "monthlyCap": null,
+          "minSpend": null,
+          "conditions": "2 mpd on Singapore Airlines, Scoot, KrisShop, and Grab."
+        },
+        {
+          "id": "amex-kf-general",
+          "categories": ["dining", "groceries", "onlineShopping", "transport", "entertainment", "fuel", "utilities", "insurance", "healthcare", "education", "departmentStore", "contactless", "general"],
+          "rate": 1.1,
+          "rateType": "miles",
+          "monthlyCap": null,
+          "minSpend": null,
+          "conditions": "1.1 mpd on all other eligible spend. Miles go directly to KrisFlyer."
+        }
+      ]
+    },
+    {
+      "id": "amex-krisflyer-ascend",
+      "name": "KrisFlyer Ascend",
+      "issuer": "AMEX",
+      "fullName": "American Express Singapore Airlines KrisFlyer Ascend Card",
+      "country": "SG",
+      "network": "amex",
+      "annualFee": 337.05,
+      "annualFeeWaived": false,
+      "minIncome": 50000,
+      "aliases": ["Amex KrisFlyer Ascend", "AMEX KrisFlyer Ascend", "KrisFlyer Ascend"],
+      "rewardTiers": [
+        {
+          "id": "amex-kfa-sia",
+          "categories": ["travel"],
+          "rate": 3.0,
+          "rateType": "miles",
+          "monthlyCap": null,
+          "minSpend": null,
+          "conditions": "3 mpd on Singapore Airlines, Scoot, KrisShop, and Grab."
+        },
+        {
+          "id": "amex-kfa-general",
+          "categories": ["dining", "groceries", "onlineShopping", "transport", "entertainment", "fuel", "utilities", "insurance", "healthcare", "education", "departmentStore", "contactless", "general"],
+          "rate": 1.2,
+          "rateType": "miles",
+          "monthlyCap": null,
+          "minSpend": null,
+          "conditions": "1.2 mpd on all other eligible spend."
+        }
+      ]
+    },
+    {
+      "id": "sc-simply-cash",
+      "name": "Simply Cash",
+      "issuer": "Standard Chartered",
+      "fullName": "Standard Chartered Simply Cash Credit Card",
+      "country": "SG",
+      "network": "visa",
+      "annualFee": 196.20,
+      "annualFeeWaived": true,
+      "minIncome": 30000,
+      "aliases": ["SC Simply Cash", "Standard Chartered Simply Cash", "StanChart Simply Cash"],
+      "rewardTiers": [
+        {
+          "id": "sc-sc-all",
+          "categories": ["dining", "groceries", "onlineShopping", "transport", "travel", "entertainment", "fuel", "utilities", "insurance", "healthcare", "education", "departmentStore", "contactless", "general"],
+          "rate": 1.5,
+          "rateType": "cashback",
+          "monthlyCap": null,
+          "minSpend": null,
+          "conditions": "Flat 1.5% unlimited cashback on everything. No min spend, no cap."
+        }
+      ]
+    },
+    {
+      "id": "sc-unlimited",
+      "name": "Unlimited Cashback",
+      "issuer": "Standard Chartered",
+      "fullName": "Standard Chartered Unlimited Cashback Credit Card",
+      "country": "SG",
+      "network": "mastercard",
+      "annualFee": 196.20,
+      "annualFeeWaived": true,
+      "minIncome": 30000,
+      "aliases": ["SC Unlimited", "Standard Chartered Unlimited", "StanChart Unlimited"],
+      "rewardTiers": [
+        {
+          "id": "sc-ul-all",
+          "categories": ["dining", "groceries", "onlineShopping", "transport", "travel", "entertainment", "fuel", "utilities", "insurance", "healthcare", "education", "departmentStore", "contactless", "general"],
+          "rate": 1.5,
+          "rateType": "cashback",
+          "monthlyCap": null,
+          "minSpend": null,
+          "conditions": "Flat 1.5% unlimited cashback on everything. No min spend, no cap."
+        }
+      ]
+    },
+    {
+      "id": "sc-journey",
+      "name": "Journey",
+      "issuer": "Standard Chartered",
+      "fullName": "Standard Chartered Journey Credit Card",
+      "country": "SG",
+      "network": "visa",
+      "annualFee": 196.20,
+      "annualFeeWaived": true,
+      "minIncome": 30000,
+      "aliases": ["SC Journey", "Standard Chartered Journey", "StanChart Journey"],
+      "rewardTiers": [
+        {
+          "id": "sc-jo-overseas",
+          "categories": ["travel"],
+          "rate": 3.0,
+          "rateType": "cashback",
+          "monthlyCap": 100.0,
+          "minSpend": null,
+          "conditions": "3% cashback on overseas spend (cap S$100/month)."
+        },
+        {
+          "id": "sc-jo-general",
+          "categories": ["dining", "groceries", "onlineShopping", "transport", "entertainment", "fuel", "utilities", "insurance", "healthcare", "education", "departmentStore", "contactless", "general"],
+          "rate": 1.5,
+          "rateType": "cashback",
+          "monthlyCap": null,
+          "minSpend": null,
+          "conditions": "1.5% cashback on all local spend."
+        }
+      ]
+    },
+    {
+      "id": "sc-smart",
+      "name": "Smart",
+      "issuer": "Standard Chartered",
+      "fullName": "Standard Chartered Smart Credit Card",
+      "country": "SG",
+      "network": "visa",
+      "annualFee": 196.20,
+      "annualFeeWaived": true,
+      "minIncome": 30000,
+      "aliases": ["SC Smart", "Standard Chartered Smart", "StanChart Smart"],
+      "rewardTiers": [
+        {
+          "id": "sc-sm-all",
+          "categories": ["dining", "groceries", "onlineShopping", "transport", "travel", "entertainment", "fuel", "utilities", "insurance", "healthcare", "education", "departmentStore", "contactless", "general"],
+          "rate": 0.0,
+          "rateType": "cashback",
+          "monthlyCap": null,
+          "minSpend": null,
+          "conditions": "0% interest on purchases for 3 months. Low interest card, not for cashback."
+        }
+      ]
+    },
+    {
+      "id": "maybank-horizon-visa",
+      "name": "Horizon Visa Signature",
+      "issuer": "Maybank",
+      "fullName": "Maybank Horizon Visa Signature Card",
+      "country": "SG",
+      "network": "visa",
+      "annualFee": 196.20,
+      "annualFeeWaived": true,
+      "minIncome": 30000,
+      "aliases": ["Maybank Horizon", "Maybank Horizon Visa Signature", "Horizon Visa Signature"],
+      "rewardTiers": [
+        {
+          "id": "mb-hv-overseas",
+          "categories": ["travel"],
+          "rate": 2.8,
+          "rateType": "miles",
+          "monthlyCap": null,
+          "minSpend": 800.0,
+          "conditions": "2.8 mpd on all FCY spend (uncapped). S$800 min monthly spend."
+        },
+        {
+          "id": "mb-hv-air",
+          "categories": ["travel"],
+          "rate": 2.8,
+          "rateType": "miles",
+          "monthlyCap": 10000.0,
+          "minSpend": 800.0,
+          "conditions": "2.8 mpd on air tickets. Cap S$10,000/month."
+        },
+        {
+          "id": "mb-hv-local",
+          "categories": ["dining", "groceries", "transport", "departmentStore"],
+          "rate": 1.2,
+          "rateType": "miles",
+          "monthlyCap": null,
+          "minSpend": 800.0,
+          "conditions": "1.2 mpd on selected local retail."
+        },
+        {
+          "id": "mb-hv-general",
+          "categories": ["onlineShopping", "entertainment", "fuel", "utilities", "insurance", "healthcare", "education", "contactless", "general"],
+          "rate": 0.4,
+          "rateType": "miles",
+          "monthlyCap": null,
+          "minSpend": null,
+          "conditions": "0.4 mpd on all other spend."
+        }
+      ]
+    },
+    {
+      "id": "maybank-family-friends",
+      "name": "Family & Friends",
+      "issuer": "Maybank",
+      "fullName": "Maybank Family & Friends Card",
+      "country": "SG",
+      "network": "mastercard",
+      "annualFee": 196.20,
+      "annualFeeWaived": true,
+      "minIncome": 30000,
+      "aliases": ["Maybank Family & Friends", "Maybank F&F", "Maybank Family and Friends"],
+      "rewardTiers": [
+        {
+          "id": "mb-ff-bonus",
+          "categories": ["dining", "groceries", "transport", "fuel", "onlineShopping"],
+          "rate": 8.0,
+          "rateType": "cashback",
+          "monthlyCap": 50.0,
+          "minSpend": 800.0,
+          "conditions": "8% cashback on 5 chosen categories (from 10 options). Min S$800/month. Cap S$50/month."
+        },
+        {
+          "id": "mb-ff-general",
+          "categories": ["travel", "entertainment", "utilities", "insurance", "healthcare", "education", "departmentStore", "contactless", "general"],
+          "rate": 0.3,
+          "rateType": "cashback",
+          "monthlyCap": null,
+          "minSpend": null,
+          "conditions": "0.3% on non-selected categories."
+        }
+      ]
+    },
+    {
+      "id": "maybank-xl-rewards",
+      "name": "XL Rewards",
+      "issuer": "Maybank",
+      "fullName": "Maybank XL Rewards Card",
+      "country": "SG",
+      "network": "visa",
+      "annualFee": 196.20,
+      "annualFeeWaived": true,
+      "minIncome": 30000,
+      "aliases": ["Maybank XL Rewards", "Maybank XL", "XL Rewards Card"],
+      "rewardTiers": [
+        {
+          "id": "mb-xl-bonus",
+          "categories": ["dining", "onlineShopping", "travel", "entertainment"],
+          "rate": 4.0,
+          "rateType": "miles",
+          "monthlyCap": null,
+          "minSpend": null,
+          "conditions": "4 mpd on all FCY, dining, shopping, travel, and entertainment."
+        },
+        {
+          "id": "mb-xl-general",
+          "categories": ["groceries", "transport", "fuel", "utilities", "insurance", "healthcare", "education", "departmentStore", "contactless", "general"],
+          "rate": 0.4,
+          "rateType": "miles",
+          "monthlyCap": null,
+          "minSpend": null,
+          "conditions": "0.4 mpd on all other spend."
+        }
+      ]
+    },
+    {
+      "id": "cimb-visa-signature",
+      "name": "Visa Signature",
+      "issuer": "CIMB",
+      "fullName": "CIMB Visa Signature Card",
+      "country": "SG",
+      "network": "visa",
+      "annualFee": 0,
+      "annualFeeWaived": true,
+      "minIncome": 30000,
+      "aliases": ["CIMB Visa Signature", "CIMB Signature"],
+      "rewardTiers": [
+        {
+          "id": "cimb-vs-bonus",
+          "categories": ["onlineShopping", "groceries"],
+          "rate": 10.0,
+          "rateType": "cashback",
+          "monthlyCap": 30.0,
+          "minSpend": 800.0,
+          "conditions": "10% cashback on online shopping, groceries, beauty/wellness, pet shops, cruises. Min S$800/month. Cap S$30/month."
+        },
+        {
+          "id": "cimb-vs-general",
+          "categories": ["dining", "transport", "travel", "entertainment", "fuel", "utilities", "insurance", "healthcare", "education", "departmentStore", "contactless", "general"],
+          "rate": 0.2,
+          "rateType": "cashback",
+          "monthlyCap": null,
+          "minSpend": null,
+          "conditions": "0.2% on all other spend."
+        }
+      ]
+    },
+    {
+      "id": "posb-everyday",
+      "name": "Everyday Card",
+      "issuer": "POSB",
+      "fullName": "POSB Everyday Card",
+      "country": "SG",
+      "network": "visa",
+      "annualFee": 196.20,
+      "annualFeeWaived": true,
+      "minIncome": 30000,
+      "aliases": ["POSB Everyday", "POSB Everyday Card"],
+      "rewardTiers": [
+        {
+          "id": "posb-ed-ntuc",
+          "categories": ["groceries"],
+          "rate": 5.0,
+          "rateType": "cashback",
+          "monthlyCap": 60.0,
+          "minSpend": 800.0,
+          "conditions": "Up to 5% cashback at NTUC FairPrice, Sheng Siong."
+        },
+        {
+          "id": "posb-ed-general",
+          "categories": ["dining", "onlineShopping", "transport", "travel", "entertainment", "fuel", "utilities", "insurance", "healthcare", "education", "departmentStore", "contactless", "general"],
+          "rate": 0.3,
+          "rateType": "cashback",
+          "monthlyCap": null,
+          "minSpend": null,
+          "conditions": "0.3% on all other spend."
+        }
+      ]
+    },
+    {
+      "id": "dbs-vantage",
+      "name": "Vantage",
+      "issuer": "DBS",
+      "fullName": "DBS Vantage Card",
+      "country": "SG",
+      "network": "visa",
+      "annualFee": 535.00,
+      "annualFeeWaived": false,
+      "minIncome": 120000,
+      "aliases": ["DBS Vantage", "DBS Vantage Card"],
+      "rewardTiers": [
+        {
+          "id": "dbs-van-all",
+          "categories": ["dining", "groceries", "onlineShopping", "transport", "travel", "entertainment", "fuel", "utilities", "insurance", "healthcare", "education", "departmentStore", "contactless", "general"],
+          "rate": 2.0,
+          "rateType": "miles",
+          "monthlyCap": null,
+          "minSpend": null,
+          "conditions": "Up to 2 mpd on all spend. Unlimited airport lounge access."
+        }
+      ]
+    },
+    {
+      "id": "krisflyer-uob",
+      "name": "KrisFlyer UOB",
+      "issuer": "UOB",
+      "fullName": "KrisFlyer UOB Credit Card",
+      "country": "SG",
+      "network": "visa",
+      "annualFee": 196.20,
+      "annualFeeWaived": true,
+      "minIncome": 30000,
+      "aliases": ["KrisFlyer UOB", "UOB KrisFlyer", "KrisFlyer UOB Card"],
+      "rewardTiers": [
+        {
+          "id": "kf-uob-sia",
+          "categories": ["travel"],
+          "rate": 2.4,
+          "rateType": "miles",
+          "monthlyCap": null,
+          "minSpend": 1000.0,
+          "conditions": "2.4 mpd on SIA Group spend (min S$1,000/month on SIA)."
+        },
+        {
+          "id": "kf-uob-general",
+          "categories": ["dining", "groceries", "onlineShopping", "transport", "entertainment", "fuel", "utilities", "insurance", "healthcare", "education", "departmentStore", "contactless", "general"],
+          "rate": 1.2,
+          "rateType": "miles",
+          "monthlyCap": null,
+          "minSpend": null,
+          "conditions": "1.2 mpd on all other spend."
+        }
+      ]
+    },
+    {
+      "id": "boc-elite-miles",
+      "name": "Elite Miles",
+      "issuer": "BOC",
+      "fullName": "BOC Elite Miles World Mastercard",
+      "country": "SG",
+      "network": "mastercard",
+      "annualFee": 196.20,
+      "annualFeeWaived": true,
+      "minIncome": 30000,
+      "aliases": ["BOC Elite Miles", "Bank of China Elite Miles"],
+      "rewardTiers": [
+        {
+          "id": "boc-em-overseas",
+          "categories": ["travel"],
+          "rate": 2.8,
+          "rateType": "miles",
+          "monthlyCap": null,
+          "minSpend": null,
+          "conditions": "2.8 mpd on overseas transactions."
+        },
+        {
+          "id": "boc-em-local",
+          "categories": ["dining", "groceries", "onlineShopping", "transport", "entertainment", "fuel", "utilities", "insurance", "healthcare", "education", "departmentStore", "contactless", "general"],
+          "rate": 1.4,
+          "rateType": "miles",
+          "monthlyCap": null,
+          "minSpend": null,
+          "conditions": "1.4 mpd on local spend."
+        }
+      ]
+    }
+  ]
+}

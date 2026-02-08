@@ -1,0 +1,512 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A10000001 /* CardWiseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000001; };
+		A10000002 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000002; };
+		A10000003 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000003; };
+		A10000004 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000004; };
+		A10000005 /* CardProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000005; };
+		A10000006 /* MerchantCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000006; };
+		A10000007 /* TransactionIngestionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000007; };
+		A10000008 /* CardDetectionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000008; };
+		A10000009 /* RewardOptimizationEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000009; };
+		A10000010 /* PKPassGeneratorService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000010; };
+		A10000011 /* MerchantCategoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000011; };
+		A10000012 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000012; };
+		A10000013 /* TransactionIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000013; };
+		A10000014 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000014; };
+		A10000015 /* ShortcutSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000015; };
+		A10000016 /* WalletPassSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000016; };
+		A10000017 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000017; };
+		A10000018 /* TransactionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000018; };
+		A10000019 /* TransactionRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000019; };
+		A10000020 /* CardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000020; };
+		A10000021 /* CardDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000021; };
+		A10000022 /* ReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000022; };
+		A10000023 /* sg_cards.json in Resources */ = {isa = PBXBuildFile; fileRef = B10000023; };
+		A10000024 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B10000024; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		C10000001 /* CardWise.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CardWise.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B10000001 /* CardWiseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardWiseApp.swift; sourceTree = "<group>"; };
+		B10000002 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		B10000003 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
+		B10000004 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
+		B10000005 /* CardProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardProduct.swift; sourceTree = "<group>"; };
+		B10000006 /* MerchantCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerchantCategory.swift; sourceTree = "<group>"; };
+		B10000007 /* TransactionIngestionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionIngestionService.swift; sourceTree = "<group>"; };
+		B10000008 /* CardDetectionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetectionService.swift; sourceTree = "<group>"; };
+		B10000009 /* RewardOptimizationEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardOptimizationEngine.swift; sourceTree = "<group>"; };
+		B10000010 /* PKPassGeneratorService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PKPassGeneratorService.swift; sourceTree = "<group>"; };
+		B10000011 /* MerchantCategoryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerchantCategoryService.swift; sourceTree = "<group>"; };
+		B10000012 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		B10000013 /* TransactionIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionIntent.swift; sourceTree = "<group>"; };
+		B10000014 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		B10000015 /* ShortcutSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutSetupView.swift; sourceTree = "<group>"; };
+		B10000016 /* WalletPassSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletPassSetupView.swift; sourceTree = "<group>"; };
+		B10000017 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		B10000018 /* TransactionListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionListView.swift; sourceTree = "<group>"; };
+		B10000019 /* TransactionRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionRowView.swift; sourceTree = "<group>"; };
+		B10000020 /* CardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsView.swift; sourceTree = "<group>"; };
+		B10000021 /* CardDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetailView.swift; sourceTree = "<group>"; };
+		B10000022 /* ReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportView.swift; sourceTree = "<group>"; };
+		B10000023 /* sg_cards.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = sg_cards.json; sourceTree = "<group>"; };
+		B10000024 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B10000025 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D10000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		E10000001 = {
+			isa = PBXGroup;
+			children = (
+				E10000002 /* CardWise */,
+				E10000099 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E10000099 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C10000001 /* CardWise.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E10000002 /* CardWise */ = {
+			isa = PBXGroup;
+			children = (
+				E10000003 /* App */,
+				E10000004 /* Models */,
+				E10000005 /* Services */,
+				E10000006 /* Views */,
+				E10000010 /* Data */,
+				E10000011 /* Intents */,
+				E10000012 /* Resources */,
+				B10000025 /* Info.plist */,
+			);
+			path = CardWise;
+			sourceTree = "<group>";
+		};
+		E10000003 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				B10000001 /* CardWiseApp.swift */,
+				B10000002 /* ContentView.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		E10000004 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				B10000003 /* Transaction.swift */,
+				B10000004 /* Card.swift */,
+				B10000005 /* CardProduct.swift */,
+				B10000006 /* MerchantCategory.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		E10000005 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				B10000007 /* TransactionIngestionService.swift */,
+				B10000008 /* CardDetectionService.swift */,
+				B10000009 /* RewardOptimizationEngine.swift */,
+				B10000010 /* PKPassGeneratorService.swift */,
+				B10000011 /* MerchantCategoryService.swift */,
+				B10000012 /* NotificationService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		E10000006 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E10000007 /* Onboarding */,
+				E10000008 /* Dashboard */,
+				E10000009 /* Cards */,
+				E10000013 /* Reports */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		E10000007 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				B10000014 /* OnboardingView.swift */,
+				B10000015 /* ShortcutSetupView.swift */,
+				B10000016 /* WalletPassSetupView.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		E10000008 /* Dashboard */ = {
+			isa = PBXGroup;
+			children = (
+				B10000017 /* DashboardView.swift */,
+				B10000018 /* TransactionListView.swift */,
+				B10000019 /* TransactionRowView.swift */,
+			);
+			path = Dashboard;
+			sourceTree = "<group>";
+		};
+		E10000009 /* Cards */ = {
+			isa = PBXGroup;
+			children = (
+				B10000020 /* CardsView.swift */,
+				B10000021 /* CardDetailView.swift */,
+			);
+			path = Cards;
+			sourceTree = "<group>";
+		};
+		E10000010 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				B10000023 /* sg_cards.json */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		E10000011 /* Intents */ = {
+			isa = PBXGroup;
+			children = (
+				B10000013 /* TransactionIntent.swift */,
+			);
+			path = Intents;
+			sourceTree = "<group>";
+		};
+		E10000012 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				B10000024 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		E10000013 /* Reports */ = {
+			isa = PBXGroup;
+			children = (
+				B10000022 /* ReportView.swift */,
+			);
+			path = Reports;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F10000001 /* CardWise */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = G10000001 /* Build configuration list for PBXNativeTarget "CardWise" */;
+			buildPhases = (
+				F10000002 /* Sources */,
+				D10000001 /* Frameworks */,
+				F10000003 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CardWise;
+			productName = CardWise;
+			productReference = C10000001 /* CardWise.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		H10000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					F10000001 = {
+						CreatedOnToolsVersion = 15.0;
+					};
+				};
+			};
+			buildConfigurationList = G10000002 /* Build configuration list for PBXProject "CardWise" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = E10000001;
+			productRefGroup = E10000099 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F10000001 /* CardWise */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F10000003 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A10000023 /* sg_cards.json in Resources */,
+				A10000024 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F10000002 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A10000001 /* CardWiseApp.swift in Sources */,
+				A10000002 /* ContentView.swift in Sources */,
+				A10000003 /* Transaction.swift in Sources */,
+				A10000004 /* Card.swift in Sources */,
+				A10000005 /* CardProduct.swift in Sources */,
+				A10000006 /* MerchantCategory.swift in Sources */,
+				A10000007 /* TransactionIngestionService.swift in Sources */,
+				A10000008 /* CardDetectionService.swift in Sources */,
+				A10000009 /* RewardOptimizationEngine.swift in Sources */,
+				A10000010 /* PKPassGeneratorService.swift in Sources */,
+				A10000011 /* MerchantCategoryService.swift in Sources */,
+				A10000012 /* NotificationService.swift in Sources */,
+				A10000013 /* TransactionIntent.swift in Sources */,
+				A10000014 /* OnboardingView.swift in Sources */,
+				A10000015 /* ShortcutSetupView.swift in Sources */,
+				A10000016 /* WalletPassSetupView.swift in Sources */,
+				A10000017 /* DashboardView.swift in Sources */,
+				A10000018 /* TransactionListView.swift in Sources */,
+				A10000019 /* TransactionRowView.swift in Sources */,
+				A10000020 /* CardsView.swift in Sources */,
+				A10000021 /* CardDetailView.swift in Sources */,
+				A10000022 /* ReportView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		I10000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		I10000002 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		I10000003 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = CardWise/Info.plist;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cardwise.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		I10000004 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = CardWise/Info.plist;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cardwise.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		G10000001 /* Build configuration list for PBXNativeTarget "CardWise" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				I10000003 /* Debug */,
+				I10000004 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		G10000002 /* Build configuration list for PBXProject "CardWise" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				I10000001 /* Debug */,
+				I10000002 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+	};
+	rootObject = H10000001 /* Project object */;
+}
